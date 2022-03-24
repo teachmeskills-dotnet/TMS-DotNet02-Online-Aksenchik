@@ -1,0 +1,110 @@
+﻿@*@model CourseProject.Mvc2.ViewModels.FilmViewModel*@
+@model CourseProject.Mvc2.Models.Film
+@{
+    ViewBag.Title = @Html.DisplayFor(model => model.NameFilms);
+}
+
+<form class="main__view-film" asp-action="Index" asp-controller="Film" asp-route-id="@Model.Id">
+    <div class="film__info">
+        <div class="film__poster">
+            <img src="@Html.DisplayFor(model => model.PathPoster)" class="view__poster" alt="">
+        </div>
+        <div class="film__about">
+            <div class="film__name">@Html.DisplayFor(model => model.NameFilms)</div>
+            <div class="film__line"></div>
+            <div class="film__data">
+                <div class="data__size">
+                    <div class="film__year film__about-style">Год производства:</div>
+                    <div class="film__year film__about-style">@Html.DisplayFor(model => model.ReleaseDate)</div>
+                </div>
+                <div class="data__size">
+                    <div class="film__country film__about-style">Страна:</div>
+                    <div class="film__year film__about-style">
+                        @foreach (State item in Model.States)
+                        {
+                            @item.Country
+                        }
+                    </div>
+                </div>
+                <div class="data__size">
+                    <div class="film__genre film__about-style">Жанр:</div>
+                    <div class="film__year film__about-style"></div>
+                </div>
+                <div class="data__size">
+                    <div class="film__age film__about-style">Возраст:</div>
+                    <div class="film__year film__about-style">@Html.DisplayFor(model => model.AgeLimit)+</div>
+                </div>
+                <div class="data__size">
+                    <div class="film__manager film__about-style">Режиссер:</div>
+                    <div class="film__year film__about-style"></div>
+                </div>
+                <div class="data__size">
+                    <div class="film__time film__about-style">Время:</div>
+                    <div class="film__year film__about-style">@Html.DisplayFor(model => model.Time)</div>
+                </div>
+                <div class="data__size">
+                    <div class="film__role film__about-style">В главных ролях:</div>
+                    <div class="film__roles film__about-style">РОли</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="film__description">
+        <div class="description">Описание:</div>
+        <div class="description__text">@Html.DisplayFor(model => model.Description)</div>
+    </div>
+    <div class="film__rating">
+        <div class="rating__star">
+            @for (int i = 0; i < 10; i++)
+            {
+                <img src="~/img/favourite.png" width="40px" height="40px" alt="">
+            }
+        </div>
+
+        <div class="rating__world">
+            <div class="rating__sait">Рейтинг сайта: </div>
+            <div class="rating__kinopoisk">kinopoisk: </div>
+            <div class="rating__imdb">IMDb: </div>
+        </div>
+    </div>
+    <div class="film__play">
+        <div class="media__use">
+            <div class="favourites">
+                <div class="media__text">Добавить</div>
+                <svg class="svg__favourite" width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 14L0 23V0H17V23L8 14Z" />
+                </svg>
+            </div>
+
+            <div class="watch__later">
+                <div class="media__text">Смотреть позже</div>
+            </div>
+            <div class="film__trailer">
+                <div class="media__text">Трейлер</div>
+            </div>
+        </div>
+        <div>
+            <img class="media__player" src="~/img/play.png" alt="">
+        </div>
+    </div>
+    <div class="film__recommend">
+        <div class="description">Мы рекомендуем:</div>
+        <div class="recommend">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+            <img class="recommend__film" src="~/img/poster.png" alt="">
+        </div>
+    </div>
+    <div class="film__comments">
+        <div class="description">Добавить комментарий:</div>
+        <div class="add__comments">
+            <textarea class="textarea__comments" name="text" placeholder="Текст сообщения"></textarea>
+            <button class="post__comments">Отправвить</button>
+        </div>
+
+    </div>
+</form>
