@@ -22,7 +22,7 @@ namespace Course_Project.Logic.Interfaces
         /// Get film by identifier.
         /// </summary>
         /// <param name="id">Identifier.</param>
-        /// <returns>film data transfer object.</returns>
+        /// <returns>Film data transfer object.</returns>
         Task<FilmDto> GetByIdAsync(int id);
 
         /// <summary>
@@ -30,5 +30,11 @@ namespace Course_Project.Logic.Interfaces
         /// </summary>
         /// <param name="model">film data transfer object.</param>
         Task UpdateAsync(FilmDto model);
-    }
+
+        /// <summary>
+        /// Get films by film identifier.
+        /// </summary>
+        /// <param name="filmId">Film identifier.</param>
+        /// <returns>Film data transfer objects.</returns>
+        Task<IEnumerable<FilmDto>> GetAllByUserIdAsync(string filmId);
 }

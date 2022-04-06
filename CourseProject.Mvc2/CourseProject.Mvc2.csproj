@@ -18,4 +18,8 @@
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Course Project.Logic\Course Project.Logic.csproj" />
+  </ItemGroup>
+
 </Project>

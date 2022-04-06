@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Course_Project.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 namespace Course_Project.Logic.Models
 {
     /// <summary>
-    /// Film role.
+    /// Country.
     /// </summary>
-    public class FilmRoleDto
+    public class StateDto
     {
         /// <summary>
         /// Identification.
@@ -17,13 +18,8 @@ namespace Course_Project.Logic.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Actor identification.
+        /// Country.
         /// </summary>
-        public int ActorId { get; set; }
-
-        /// <summary>
-        /// Film identification.
-        /// </summary>
-        public int FilmId { get; set; }
+        public string Country { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Course_Project.Data.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Navigation property for FilmGenre.
+        /// Navigation property for FilmGenres.
         /// </summary>
         public ICollection<FilmGenre> FilmGenres { get; set; }
 

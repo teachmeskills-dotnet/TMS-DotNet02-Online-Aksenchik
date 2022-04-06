@@ -15,14 +15,69 @@ namespace Course_Project.Data.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// Name.
+        /// </summary>
+        public string NameFilms { get; set; }
+
+        /// <summary>
+        /// Age limit.
+        /// </summary>
+        public int AgeLimit { get; set; }
+
+        /// <summary>
+        /// Release date.
+        /// </summary>
+        public int ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Description.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Time.
+        /// </summary>
+        public int Time { get; set; }
+
+        /// <summary>
+        /// Path to file.
+        /// </summary>
+        public string PathPoster { get; set; }
+
+        /// <summary>
+        /// Image name.
+        /// </summary>
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Identification rating kinopoisk.
+        /// </summary>
+        public int IdRating { get; set; }
+
+        /// <summary>
+        /// Rating site.
+        /// </summary>
+        public string RatingSite { get; set; }
+
+        /// <summary>
+        /// Rating kinopoisk.
+        /// </summary>
+        public string RatingKinopoisk { get; set; }
+
+        /// <summary>
+        /// Rating imdb.
+        /// </summary>
+        public string RatingImdb { get; set; }
+
+        /// <summary>
         /// Navigation property for FilmStageManager.
         /// </summary>
         public ICollection<FilmStageManager> FilmStageManagers { get; set; }
 
         /// <summary>
-        /// Navigation property for FilmRoles.
+        /// Navigation property for FilmActors.
         /// </summary>
-        public ICollection<FilmRole> FilmRoles { get; set; }
+        public ICollection<FilmActor> FilmActors { get; set; }
 
         /// <summary>
         /// Navigation property for FilmCountry.
@@ -33,25 +88,5 @@ namespace Course_Project.Data.Models
         /// Navigation property for FilmGenre.
         /// </summary>
         public ICollection<FilmGenre> FilmGenres { get; set; }
-
-        /// <summary>
-        /// FilmName.
-        /// </summary>
-        public string FilmName { get; set; }
-
-        /// <summary>
-        /// Age limit.
-        /// </summary>
-        public int AgeLimit { get; set; }
-
-        /// <summary>
-        /// Rating films.
-        /// </summary>
-        public float Rating { get; set; }
-
-        /// <summary>
-        /// Release date.
-        /// </summary>
-        public DateTime ReleaseDate { get; set; }
     }
 }

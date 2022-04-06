@@ -9,9 +9,9 @@ namespace Course_Project.Data.Configurations
     /// <summary>
     /// EF Configuration for FilmRole entity.
     /// </summary>
-    public class FilmRolesConfiguration : IEntityTypeConfiguration<FilmRole>
+    public class FilmRolesConfiguration : IEntityTypeConfiguration<FilmActor>
     {
-        public void Configure(EntityTypeBuilder<FilmRole> builder)
+        public void Configure(EntityTypeBuilder<FilmActor> builder)
         {
             builder = builder ?? throw new ArgumentNullException(nameof(builder));
 
@@ -22,12 +22,12 @@ namespace Course_Project.Data.Configurations
                 .UseIdentityColumn();
 
             builder.HasOne(filmRole => filmRole.Film)
-               .WithMany(film => film.FilmRoles)
+               .WithMany(film => film.FilmActors)
                .HasForeignKey(filmRole => filmRole.FilmId)
                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(filmRole => filmRole.Actor)
-                .WithMany(actor => actor.FilmRoles)
+                .WithMany(actor => actor.FilmActors)
                 .HasForeignKey(filmRole => filmRole.ActorId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

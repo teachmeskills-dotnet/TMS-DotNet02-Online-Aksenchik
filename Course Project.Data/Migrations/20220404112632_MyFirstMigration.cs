@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Course_Project.Data.Migrations
 {
-    public partial class FilmBd : Migration
+    public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,25 +16,13 @@ namespace Course_Project.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Actors = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FirstName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    SecondName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Actors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Countries",
-                schema: "Film",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Countries = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,10 +32,17 @@ namespace Course_Project.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FilmName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdRating = table.Column<int>(type: "int", nullable: false),
+                    NameFilms = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AgeLimit = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<float>(type: "real", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ReleaseDate = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<int>(type: "int", nullable: false),
+                    PathPoster = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RatingSite = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    RatingKinopoisk = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    RatingImdb = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +56,7 @@ namespace Course_Project.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Genres = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Genres = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,32 +78,17 @@ namespace Course_Project.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilmCountries",
+                name: "States",
                 schema: "Film",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CountryId = table.Column<int>(type: "int", nullable: false),
-                    FilmId = table.Column<int>(type: "int", nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmCountries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FilmCountries_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalSchema: "Film",
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_FilmCountries_Films_FilmId",
-                        column: x => x.FilmId,
-                        principalSchema: "Film",
-                        principalTable: "Films",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_States", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,6 +178,35 @@ namespace Course_Project.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FilmCountries",
+                schema: "Film",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CountryId = table.Column<int>(type: "int", nullable: false),
+                    FilmId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilmCountries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FilmCountries_Films_FilmId",
+                        column: x => x.FilmId,
+                        principalSchema: "Film",
+                        principalTable: "Films",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FilmCountries_States_CountryId",
+                        column: x => x.CountryId,
+                        principalSchema: "Film",
+                        principalTable: "States",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FilmCountries_CountryId",
                 schema: "Film",
@@ -267,7 +275,7 @@ namespace Course_Project.Data.Migrations
                 schema: "Film");
 
             migrationBuilder.DropTable(
-                name: "Countries",
+                name: "States",
                 schema: "Film");
 
             migrationBuilder.DropTable(

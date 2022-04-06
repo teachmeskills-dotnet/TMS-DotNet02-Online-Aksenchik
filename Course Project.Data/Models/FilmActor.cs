@@ -9,7 +9,7 @@ namespace Course_Project.Data.Models
     /// <summary>
     /// Film role.
     /// </summary>
-    public class FilmRole
+    public class FilmActor
     {
         /// <summary>
         /// Identification.

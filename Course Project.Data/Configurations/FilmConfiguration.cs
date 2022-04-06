@@ -24,6 +24,18 @@ namespace Course_Project.Data.Configurations
 
             builder.Property(film => film.Id)
                 .UseIdentityColumn();
+
+            builder.Property(film => film.RatingSite)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthShort);
+
+            builder.Property(film => film.RatingKinopoisk)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthShort);
+
+            builder.Property(film => film.RatingImdb)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthShort);
         }
     }
 }

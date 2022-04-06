@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Course_Project.Data.Constants
 {
     public static class SqlConfiguration
     {
         /// <summary>
-        /// Custom date format.
+        /// Min lenght for string field.
         /// </summary>
-        public const string SqlDateFormat = "date";
+        public const int SqlMaxLengthShort = 6;
 
         /// <summary>
-        /// Custom decimal format.
+        /// Standart lenght for string field.
         /// </summary>
-        public const string SqlDecimalFormat = "decimal(18,4)";
+        public const int SqlMaxLengthMedium = 25;
     }
 }

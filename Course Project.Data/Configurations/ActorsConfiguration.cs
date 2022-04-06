@@ -20,6 +20,18 @@ namespace Course_Project.Data.Configurations
 
             builder.Property(actor => actor.Id)
                 .UseIdentityColumn();
+
+            builder.Property(actor => actor.FirstName)
+                .IsRequired()
+                .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
+
+            builder.Property(actor => actor.LastName)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
+
+            builder.Property(actor => actor.SecondName)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
         }
     }
 }

@@ -15,18 +15,22 @@ namespace Course_Project.Data.Models
         /// Identification.
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Country identification.
         /// </summary>
         public int CountryId { get; set; }
+
         /// <summary>
-        /// Navigation property for country.
+        /// Navigation property for State.
         /// </summary>
-        public Country Country { get; set; }
+        public State State { get; set; }
+
         /// <summary>
         /// Film identification.
         /// </summary>
         public int FilmId { get; set; }
+
         /// <summary>
         /// Navigation property for Film.
         /// </summary>

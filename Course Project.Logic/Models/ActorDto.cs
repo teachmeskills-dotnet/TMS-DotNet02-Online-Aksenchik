@@ -17,8 +17,18 @@ namespace Course_Project.Logic.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Actor.
+        /// First name.
         /// </summary>
-        public string Actors { get; set; }
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Last name.
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        /// Second name.
+        /// </summary>
+        public string SecondName { get; set; }
     }
 }

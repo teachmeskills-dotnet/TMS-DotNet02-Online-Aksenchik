@@ -1,6 +1,5 @@
 ﻿using Course_Project.Data.Configurations;
 using Course_Project.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -11,14 +10,6 @@ namespace Course_Project.Data.Contexts
     /// </summary>
     public class ApplicationDbContext : DbContext
     {
-        /// <summary>
-        /// Contructor with params.
-        /// </summary>
-        /// <param name="options">Database context options.</param>
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
 
         /// <summary>
         /// DbSet for Films.
@@ -33,7 +24,7 @@ namespace Course_Project.Data.Contexts
         /// <summary>
         /// DbSet for Countries.
         /// </summary>
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
 
         /// <summary>
         /// DbSet for FilmGenres.
@@ -48,7 +39,7 @@ namespace Course_Project.Data.Contexts
         /// <summary>
         /// DbSet for FilmRoles.
         /// </summary>
-        public DbSet<FilmRole> FilmRoles { get; set; }
+        public DbSet<FilmActor> FilmActors { get; set; }
 
         /// <summary>
         /// DbSet for Actors.
@@ -64,6 +55,20 @@ namespace Course_Project.Data.Contexts
         /// DbSet for StageManagers.
         /// </summary>
         public DbSet<StageManager> StageManagers { get; set; }
+
+        /// <summary>
+        /// Contructor with params.
+        /// </summary>
+        /// <param name="options">Database context options.</param>
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FilmData;Trusted_Connection=True;");
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -82,9 +87,6 @@ namespace Course_Project.Data.Contexts
             base.OnModelCreating(builder);
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FilmDb;Trusted_Connection=True;");
-        //}
+        
     }
 }

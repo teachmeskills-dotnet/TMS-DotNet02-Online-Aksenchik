@@ -9,17 +9,21 @@ namespace Course_Project.Data.Configurations
     /// <summary>
     /// EF Configuration for Country entity.
     /// </summary>
-    public class CountriesConfiguration : IEntityTypeConfiguration<Country>
+    public class CountriesConfiguration : IEntityTypeConfiguration<State>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
+        public void Configure(EntityTypeBuilder<State> builder)
         {
             builder = builder ?? throw new ArgumentNullException(nameof(builder));
 
-            builder.ToTable(Table.Countries, Schema.Film)
+            builder.ToTable(Table.States, Schema.Film)
                 .HasKey(country => country.Id);
 
             builder.Property(country => country.Id)
                 .UseIdentityColumn();
+
+            builder.Property(country => country.Country)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Course_Project.Data.Configurations
                 .HasForeignKey(filmCountry => filmCountry.FilmId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(filmCountry => filmCountry.Country)
+            builder.HasOne(filmCountry => filmCountry.State)
                 .WithMany(country => country.FilmCountries)
                 .HasForeignKey(filmCountry => filmCountry.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);

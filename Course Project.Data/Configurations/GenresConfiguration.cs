@@ -20,6 +20,10 @@ namespace Course_Project.Data.Configurations
 
             builder.Property(genre => genre.Id)
                 .UseIdentityColumn();
+
+            builder.Property(genre => genre.Genres)
+               .IsRequired()
+               .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Course_Project.Data.Models;
+using Course_Project.Logic.Exceptions;
 using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Course_Project.Logic.Managers
@@ -18,55 +20,51 @@ namespace Course_Project.Logic.Managers
 
         public async Task CreateAsync(FilmDto model)
         {
-            if (string.IsNullOrEmpty(model.FilmName))
-            {
-                throw new ArgumentException($"'{nameof(model.FilmName)}' cannot be null or empty.", nameof(model.FilmName));
-            }
-
             var film = new Film
             {
-                FilmName = model.FilmName,
+                Id = model.Id,
+                NameFilms = model.NameFilms,
                 AgeLimit = model.AgeLimit,
-                Rating = model.Rating,
                 ReleaseDate = model.ReleaseDate,
+                Description = model.Description,
+                Time = model.Time,
+                PathPoster = model.PathPoster,
+                ImageName = model.ImageName,
+                IdRating = model.IdRating,
+                RatingSite = model.RatingSite,
+                RatingKinopoisk = model.RatingKinopoisk,
+                RatingImdb = model.RatingImdb
             };
 
             await _filmRepository.CreateAsync(film);
             await _filmRepository.SaveChangesAsync();
         }
 
-        public async Task<FilmDto> GetByIdAsync(int id)
+        public Task<IEnumerable<FilmDto>> GetAllByUserIdAsync(string filmId)
         {
-            var film = await _filmRepository.GetEntityWithoutTrackingAsync(f => f.Id == id);
+            throw new NotImplementedException();
+        }
 
-            return film is null
-                ? new FilmDto()
-                : new FilmDto
-                {
-                    FilmName = film.FilmName,
-                    AgeLimit = film.AgeLimit,
-                    Rating = film.Rating,
-                    ReleaseDate = film.ReleaseDate,
-                };
+        public Task<FilmDto> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(FilmDto model)
         {
             model = model ?? throw new ArgumentNullException(nameof(model));
 
-            var film = await _filmRepository.GetEntityAsync(f => f.Id == model.Id);
+            var filmUpdate = await _filmRepository.GetEntityAsync(p => p.Id == model.Id);
 
-            if (film is null)
+            if (filmUpdate is null)
             {
-                throw new ArgumentException($"'{nameof(model.Id)}' user not found.", nameof(model.Id));
+                throw new NotFoundException($"'{nameof(model.Id)}' project not found.", nameof(model.Id));
             }
 
-            film.FilmName = model.FilmName;
-            film.AgeLimit = model.AgeLimit;
-            film.Rating = model.Rating;
-            film.ReleaseDate = model.ReleaseDate;
-
-            await _filmRepository.SaveChangesAsync();
+            if (filmUpdate.NameFilms != model.NameFilms)
+            {
+                filmUpdate.NameFilms = model.NameFilms;
+            }
         }
     }
 }

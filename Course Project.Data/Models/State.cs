@@ -9,19 +9,21 @@ namespace Course_Project.Data.Models
     /// <summary>
     /// Country.
     /// </summary>
-    public class Country
+    public class State
     {
         /// <summary>
         /// Identification.
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
-        /// Navigation property for FilmStageManager.
+        /// Navigation property for FilmCountries.
         /// </summary>
         public ICollection<FilmCountry> FilmCountries { get; set; }
+
         /// <summary>
-        /// Actor.
+        /// Country.
         /// </summary>
-        public string Countries { get; set; }
+        public string Country { get; set; }
     }
 }

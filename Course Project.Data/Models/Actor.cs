@@ -15,13 +15,25 @@ namespace Course_Project.Data.Models
         /// Identification
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
-        /// Navigation property for FilmStageManager.
+        /// Navigation property for FilmActors.
         /// </summary>
-        public ICollection<FilmRole> FilmRoles { get; set; }
+        public ICollection<FilmActor> FilmActors { get; set; }
+
         /// <summary>
-        /// Actor.
+        /// First name.
         /// </summary>
-        public string Actors { get; set; }
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Last name.
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        /// Second name.
+        /// </summary>
+        public string SecondName { get; set; }
     }
 }

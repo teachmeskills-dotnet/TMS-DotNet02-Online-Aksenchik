@@ -8,15 +8,17 @@ namespace Course_Project.Logic.Models
     /// </summary>
     public class FilmDto
     {
-        /// <summary>
-        /// Identification.
-        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// FilmName.
+        /// Identification rating kinopoisk.
         /// </summary>
-        public string FilmName { get; set; }
+        public int IdRating { get; set; }
+
+        /// <summary>
+        /// Name.
+        /// </summary>
+        public string NameFilms { get; set; }
 
         /// <summary>
         /// Age limit.
@@ -24,13 +26,43 @@ namespace Course_Project.Logic.Models
         public int AgeLimit { get; set; }
 
         /// <summary>
-        /// Rating films.
-        /// </summary>
-        public float Rating { get; set; }
-
-        /// <summary>
         /// Release date.
         /// </summary>
-        public DateTime ReleaseDate { get; set; }
+        public int ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Description.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Time.
+        /// </summary>
+        public int Time { get; set; }
+
+        /// <summary>
+        /// Path to file.
+        /// </summary>
+        public string PathPoster { get; set; }
+
+        /// <summary>
+        /// Image name.
+        /// </summary>
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Rating site.
+        /// </summary>
+        public string RatingSite { get; set; }
+
+        /// <summary>
+        /// Rating kinopoisk.
+        /// </summary>
+        public string RatingKinopoisk { get; set; }
+
+        /// <summary>
+        /// Rating imdb.
+        /// </summary>
+        public string RatingImdb { get; set; }
     }
 }
