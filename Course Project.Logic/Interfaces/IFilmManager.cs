@@ -37,4 +37,5 @@ namespace Course_Project.Logic.Interfaces
         /// <param name="filmId">Film identifier.</param>
         /// <returns>Film data transfer objects.</returns>
         Task<IEnumerable<FilmDto>> GetAllByUserIdAsync(string filmId);
+    }
 }
