@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.WebApi", "CourseProject.WebApi\CourseProject.WebApi.csproj", "{BEFA65B0-7CCB-46AA-BF9A-05A1552F5ED8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.WebApi2", "CourseProject.WebApi2\CourseProject.WebApi2.csproj", "{637517C2-D5F2-4DF0-85C1-2614BAEDB75C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{BEFA65B0-7CCB-46AA-BF9A-05A1552F5ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEFA65B0-7CCB-46AA-BF9A-05A1552F5ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEFA65B0-7CCB-46AA-BF9A-05A1552F5ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637517C2-D5F2-4DF0-85C1-2614BAEDB75C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637517C2-D5F2-4DF0-85C1-2614BAEDB75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637517C2-D5F2-4DF0-85C1-2614BAEDB75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637517C2-D5F2-4DF0-85C1-2614BAEDB75C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
