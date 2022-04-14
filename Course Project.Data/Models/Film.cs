@@ -80,6 +80,11 @@ namespace Course_Project.Data.Models
         public ICollection<FilmActor> FilmActors { get; set; }
 
         /// <summary>
+        /// Navigation property for UserFilms.
+        /// </summary>
+        public ICollection<UserFilm> UserFilms { get; set; }
+
+        /// <summary>
         /// Navigation property for FilmCountry.
         /// </summary>
         public ICollection<FilmCountry> FilmCountries { get; set; }

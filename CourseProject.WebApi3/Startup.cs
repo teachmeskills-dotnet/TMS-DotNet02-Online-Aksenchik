@@ -1,20 +1,19 @@
 using Course_Project.Data.Contexts;
+using Course_Project.Data.Models;
 using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Managers;
+using Course_Project.Logic.Services;
+using CourseProject.WebApi3.Middlewares;
+using CourseProject.WebApi3.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.WebApi3
 {
@@ -33,14 +32,67 @@ namespace CourseProject.WebApi3
             // Custom managers & services
             services.AddScoped(typeof(IRepositoryManager<>), typeof(RepositoryManager<>));
             services.AddScoped<IFilmManager, FilmManager>();
+            services.AddScoped<IJwtService, JwtService>();//
 
             // Database context
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            // Configure
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));//
+
+            // Default microsoft & other services
+            services.AddMemoryCache();
+            services.AddResponseCompression(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseProject.WebApi3", Version = "v1" });
+                options.EnableForHttps = true;
+                options.ExcludedMimeTypes = new[] { "application/json" };
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpContextAccessor();
+            services.AddCors();
+            services.AddControllers();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseProject.WebApi3", Version = "v1" });
+            //});
+
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "API",
+                    Description = "Film API",
+                    Contact = new OpenApiContact() { }
+                });
+
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                config.AddSecurityDefinition("Bearer", securitySchema);
+
+                var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    {
+                        securitySchema, new[] { "Bearer" }
+                    }
+                };
+                config.AddSecurityRequirement(securityRequirement);
             });
         }
 
@@ -54,11 +106,20 @@ namespace CourseProject.WebApi3
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseProject.WebApi3 v1"));
             }
 
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
-
+            app.UseHsts();
             app.UseRouting();
 
-            app.UseAuthorization();
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

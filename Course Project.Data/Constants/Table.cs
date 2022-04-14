@@ -7,6 +7,16 @@ namespace Course_Project.Data.Constants
     public static class Table
     {
         /// <summary>
+        /// User film.
+        /// </summary>
+        public const string UserFilms = nameof(UserFilms);
+
+        /// <summary>
+        /// User.
+        /// </summary>
+        public const string Users = nameof(Users);
+
+        /// <summary>
         /// Film.
         /// </summary>
         public const string Films = nameof(Films);

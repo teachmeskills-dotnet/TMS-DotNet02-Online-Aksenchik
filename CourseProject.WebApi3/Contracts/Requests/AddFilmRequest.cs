@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.ViewModels
+namespace CourseProject.WebApi3.Contracts.Requests
 {
-    public class AddFilmViewModel
+    public class AddFilmRequest
     {
-        public int Id { get; set; }
-
         /// <summary>
         /// Name.
         /// </summary>
@@ -19,6 +21,11 @@ namespace CourseProject.Mvc2.ViewModels
         public int AgeLimit { get; set; }
 
         /// <summary>
+        /// Identification rating kinopoisk.
+        /// </summary>
+        public int IdRating { get; set; }
+
+        /// <summary>
         /// Rating kinopoisk.
         /// </summary>
         [Required]
@@ -28,7 +35,7 @@ namespace CourseProject.Mvc2.ViewModels
         /// Rating site.
         /// </summary>
         [Required]
-        public string Rating { get; set; }
+        public string RatingSite { get; set; }
 
         /// <summary>
         /// Rating Imdb.

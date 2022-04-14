@@ -32,6 +32,12 @@ namespace Course_Project.Logic.Interfaces
         Task UpdateAsync(FilmDto model);
 
         /// <summary>
+        /// Delete film by identifier.
+        /// </summary>
+        /// <param name="id">Film identifier.</param>
+        Task DeleteAsync(int id);
+
+        /// <summary>
         /// Get films by film identifier.
         /// </summary>
         /// <param name="filmId">Film identifier.</param>

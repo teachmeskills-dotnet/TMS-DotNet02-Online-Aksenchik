@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.ViewModels
+namespace CourseProject.Web.Shared.Models
 {
-    public class AddFilmViewModel
+    public class FilmCreateRequest
     {
-        public int Id { get; set; }
-
         /// <summary>
         /// Name.
         /// </summary>
@@ -19,6 +21,11 @@ namespace CourseProject.Mvc2.ViewModels
         public int AgeLimit { get; set; }
 
         /// <summary>
+        /// Identification rating kinopoisk.
+        /// </summary>
+        public int IdRating { get; set; }
+
+        /// <summary>
         /// Rating kinopoisk.
         /// </summary>
         [Required]
@@ -28,7 +35,7 @@ namespace CourseProject.Mvc2.ViewModels
         /// Rating site.
         /// </summary>
         [Required]
-        public string Rating { get; set; }
+        public string RatingSite { get; set; }
 
         /// <summary>
         /// Rating Imdb.
@@ -45,26 +52,26 @@ namespace CourseProject.Mvc2.ViewModels
         /// <summary>
         /// Actor.
         /// </summary>
-        [Required]
-        public string Countries { get; set; }
+        //[Required]
+        //public string Countries { get; set; }
 
         /// <summary>
         /// Actor.
         /// </summary>
-        [Required]
-        public string Actors { get; set; }
+        //[Required]
+        //public string Actors { get; set; }
 
         /// <summary>
         /// Genre.
         /// </summary>
-        [Required]
-        public string GenreName { get; set; }
+        //[Required]
+        //public string GenreName { get; set; }
 
         /// <summary>
         /// Stage manager.
         /// </summary>
-        [Required]
-        public string StageManagers { get; set; }
+        //[Required]
+        //public string StageManagers { get; set; }
 
         /// <summary>
         /// Description.

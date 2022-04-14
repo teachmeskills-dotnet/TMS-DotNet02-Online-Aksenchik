@@ -1,11 +1,16 @@
-﻿using CourseProject.Mvc2.Models;
+﻿using CourseProject.Mvc2.Interfaces;
+using CourseProject.Mvc2.Models;
 using CourseProject.Mvc2.ViewModels;
+using CourseProject.Web.Shared.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
@@ -14,11 +19,13 @@ namespace CourseProject.Mvc2.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        public readonly IIdentityService _identityService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IIdentityService identityService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
         [HttpGet]
         public IActionResult Register()
@@ -37,7 +44,7 @@ namespace CourseProject.Mvc2.Controllers
                 {
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
-                    await _userManager.AddToRoleAsync(user, "User");
+                    await _userManager.AddToRoleAsync(user, "Users");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -51,38 +58,102 @@ namespace CourseProject.Mvc2.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Login (Get).
+        /// </summary>
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            var viewModel = new UserLoginRequest();
+
+            return View(viewModel);
         }
 
+        /// <summary>
+        /// Login (Post).
+        /// </summary>
+        /// <param name="request">User login request.</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> LoginAsync(UserLoginRequest request)
         {
+            request = request ?? throw new ArgumentNullException(nameof(request));
+
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var (token, roles) = await _identityService.LoginAsync(request);
+                var claims = new List<Claim>
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
+                    new Claim(ClaimTypes.Name, token),
+                };
+
+                foreach (var role in roles)
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    claims.Add(new Claim(ClaimTypes.Role, role));
                 }
+
+                var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
+                return RedirectToAction("Index", "Home");
             }
-            return View(model);
+
+            // UNDONE: ModelError
+
+            return View(request);
         }
+
+        //[HttpGet]
+        //public IActionResult Login(string returnUrl = null)
+        //{
+        //    return View(new LoginViewModel { ReturnUrl = returnUrl });
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+        //        if (result.Succeeded)
+        //        {
+        //            // проверяем, принадлежит ли URL приложению
+        //            if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+        //            {
+        //                return Redirect(model.ReturnUrl);
+        //            }
+        //            else
+        //            {
+        //                return RedirectToAction("Index", "Home");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+        //        }
+        //    }
+        //    return View(model);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> LoginAsync(LoginViewModel request)
+        //{
+        //    request = request ?? throw new ArgumentNullException(nameof(request));
+
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+        //    // UNDONE: ModelError
+
+        //    return View(request);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

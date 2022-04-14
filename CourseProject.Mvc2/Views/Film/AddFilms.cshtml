@@ -1,4 +1,4 @@
-﻿@model CourseProject.Mvc2.Models.Film
+﻿@model FilmCreateRequest
 @{
     ViewData["Title"] = "Добавление фильма";
 }
@@ -17,45 +17,43 @@
             <input type="number" asp-for="ReleaseDate" class="mine__input" />
         </div>
         <div class="registration__block">
-            <label asp-for="Id" class="mine__form">Ид:</label>
-            <input type="number" asp-for="Id" class="mine__input" />
+            <label asp-for="RatingImdb" class="mine__form">Рейтинг Imdb:</label>
+            <input type="number" asp-for="RatingImdb" class="mine__input" />
         </div>
         <div class="registration__block">
-                <label asp-for="IdRating" class="mine__form">Ид рейтинга кинопоиска:</label>
-                <input type="text" asp-for="IdRating" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
-                <input type="text" asp-for="RatingSite" class="mine__input" />
-            </div>
-        @*<div class="registration__block">
-                <label asp-for="RatingKinopoisk" class="mine__form">Рейтинг Кинопоиск:</label>
-                <input type="text" asp-for="RatingKinopoisk" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="RatingImdb" class="mine__form">Рейтинг Imdb:</label>
-                <input type="text" asp-for="RatingImdb" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
-                <input type="text" asp-for="RatingSite" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="Countries" class="mine__form">Страна:</label>
-                <input type="text" asp-for="Countries" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="Actors" class="mine__form">Актеры:</label>
-                <input type="text" asp-for="Actors" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="GenreName" class="mine__form">Жанры:</label>
-                <input type="text" asp-for="GenreName" class="mine__input" />
-            </div>
-            <div class="registration__block">
-                <label asp-for="StageManagers" class="mine__form">Режиссер:</label>
-                <input type="text" asp-for="StageManagers" class="mine__input" />
-            </div>*@
+            <label asp-for="RatingKinopoisk" class="mine__form">Рейтинг Кинопоиск:</label>
+            <input type="text" asp-for="RatingKinopoisk" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
+            <input type="text" asp-for="RatingSite" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="IdRating" class="mine__form">Ид рейтинга кинопоиска:</label>
+            <input type="text" asp-for="IdRating" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
+            <input type="text" asp-for="RatingSite" class="mine__input" />
+        </div>
+        @*
+
+        <div class="registration__block">
+            <label asp-for="Countries" class="mine__form">Страна:</label>
+            <input type="text" asp-for="Countries" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="Actors" class="mine__form">Актеры:</label>
+            <input type="text" asp-for="Actors" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="GenreName" class="mine__form">Жанры:</label>
+            <input type="text" asp-for="GenreName" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="StageManagers" class="mine__form">Режиссер:</label>
+            <input type="text" asp-for="StageManagers" class="mine__input" />
+        </div>*@
         <div class="registration__block">
             <label asp-for="AgeLimit" class="mine__form">Возрастное ограничение:</label>
             <input type="text" asp-for="AgeLimit" class="mine__input" />

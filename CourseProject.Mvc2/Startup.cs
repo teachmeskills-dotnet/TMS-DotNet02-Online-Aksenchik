@@ -6,6 +6,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CourseProject.Mvc2.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net.Http;
+using System;
+using CourseProject.Mvc2.Interfaces;
+using CourseProject.Mvc2.Service;
 
 namespace CourseProject.Mvc2
 {
@@ -36,6 +41,13 @@ namespace CourseProject.Mvc2
             })
                 .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = "/account/login");
+
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IFilmService, FilmService>();
+            services.AddScoped(x => new HttpClient() { BaseAddress = new Uri("https://localhost:44327") });
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
@@ -51,6 +63,7 @@ namespace CourseProject.Mvc2
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -40,6 +40,19 @@ namespace Course_Project.Logic.Managers
             await _filmRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            var filmDelete = await _filmRepository.GetEntityAsync(p => p.Id == id);
+
+            if (filmDelete is null)
+            {
+                throw new NotFoundException($"'{nameof(id)}' project not found.", nameof(id));
+            }
+
+            _filmRepository.Delete(filmDelete);
+            await _filmRepository.SaveChangesAsync();
+        }
+
         public Task<IEnumerable<FilmDto>> GetAllByUserIdAsync(string filmId)
         {
             throw new NotImplementedException();

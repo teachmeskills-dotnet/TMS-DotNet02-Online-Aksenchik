@@ -1,5 +1,6 @@
 ﻿using Course_Project.Data.Configurations;
 using Course_Project.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -8,9 +9,8 @@ namespace Course_Project.Data.Contexts
     /// <summary>
     /// Main application context
     /// </summary>
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
-
         /// <summary>
         /// DbSet for Films.
         /// </summary>
@@ -57,17 +57,17 @@ namespace Course_Project.Data.Contexts
         public DbSet<StageManager> StageManagers { get; set; }
 
         /// <summary>
+        /// DbSet for UserFilms.
+        /// </summary>
+        public DbSet<UserFilm> UserFilms { get; set; }
+
+        /// <summary>
         /// Contructor with params.
         /// </summary>
         /// <param name="options">Database context options.</param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FilmData;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -83,10 +83,15 @@ namespace Course_Project.Data.Contexts
             builder.ApplyConfiguration(new FilmStageManagersConfiguration());
             builder.ApplyConfiguration(new GenresConfiguration());
             builder.ApplyConfiguration(new StageManagersConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserFilmConfiguration());
 
             base.OnModelCreating(builder);
         }
 
-        
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FilmData;Trusted_Connection=True;");
+        //}
     }
 }
