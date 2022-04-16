@@ -1,7 +1,7 @@
 ﻿using CourseProject.Mvc2.Models;
+using CourseProject.Web.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -18,8 +18,13 @@ namespace CourseProject.Mvc2.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(User user)
         {
+            UserAuthModel userAuthModel = new()
+            {
+                UserName =user.UserName
+            };
+            ViewBag.Name = userAuthModel.UserName;
             return View(await _context.Films.ToListAsync());
         }
 

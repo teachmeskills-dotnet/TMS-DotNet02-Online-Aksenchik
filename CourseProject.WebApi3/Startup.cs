@@ -32,7 +32,17 @@ namespace CourseProject.WebApi3
             // Custom managers & services
             services.AddScoped(typeof(IRepositoryManager<>), typeof(RepositoryManager<>));
             services.AddScoped<IFilmManager, FilmManager>();
-            services.AddScoped<IJwtService, JwtService>();//
+            services.AddScoped<IJwtService, JwtService>();
+
+            services.AddIdentity<User, IdentityRole>(opts => {
+                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
+                opts.Password.RequireDigit = false; // требуются ли цифры
+                opts.User.RequireUniqueEmail = true;    // уникальный email
+                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz1234567890"; // допустимые символы
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Database context
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -50,16 +60,9 @@ namespace CourseProject.WebApi3
                 options.Providers.Add<GzipCompressionProvider>();
             });
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddHttpContextAccessor();
             services.AddCors();
             services.AddControllers();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseProject.WebApi3", Version = "v1" });
-            //});
 
             services.AddSwaggerGen(config =>
             {

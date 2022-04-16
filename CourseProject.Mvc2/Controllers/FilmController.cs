@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CourseProject.Mvc2.Controllers
 {
-    [Authorize]
+   
     public class FilmController : Controller
     {
         private readonly ApplicationContext _context;
@@ -71,10 +71,10 @@ namespace CourseProject.Mvc2.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFilms(FilmCreateRequest request)
         {
-            var token = User.FindFirst(ClaimTypes.Name).Value;
+            request = request ?? throw new ArgumentNullException(nameof(request));
 
-            await _filmService.AddAsync(request, token);
-
+            //var token = User.FindFirst(ClaimTypes.Name).Value;
+                await _filmService.AddAsync(request/*, token*/);
             return RedirectToAction("Index", "Home");
         }
 

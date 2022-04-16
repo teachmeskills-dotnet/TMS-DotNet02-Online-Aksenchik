@@ -42,14 +42,14 @@ namespace CourseProject.WebApi3.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(UserLoginRequest model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { message = "Email or password is incorrect" });
+                return BadRequest(new { message = "Неправильный логин и (или) пароль" });
             }
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             var token = _jwtService.GenerateJwtToken(user.Id, _appSettings.Secret);
             var userRoles = await _userManager.GetRolesAsync(user);
             var response = new AuthenticateResponse(user, token, userRoles);
@@ -63,7 +63,7 @@ namespace CourseProject.WebApi3.Controllers
             var user = new User
             {
                 Email = request.Email,
-                UserName = request.Email,
+                UserName = request.UserName
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -71,6 +71,7 @@ namespace CourseProject.WebApi3.Controllers
 
             if (!result.Succeeded)
             {
+
                 return BadRequest(new ErrorResponse<string>
                 {
                     Message = "Can't registration new user.",

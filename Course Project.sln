@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.WebApi3", "CourseProject.WebApi3\CourseProject.WebApi3.csproj", "{6E6D7DA6-9F79-4D5C-BCDA-8704890286B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.Web.Shared", "CourseProject.Web.Shared\CourseProject.Web.Shared.csproj", "{C28DC725-9252-436A-89A2-5B90BE1C88C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.Web.Shared", "CourseProject.Web.Shared\CourseProject.Web.Shared.csproj", "{C28DC725-9252-436A-89A2-5B90BE1C88C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,6 @@
 ﻿using Course_Project.Data.Models;
-using System;
+using CourseProject.Web.Shared.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.WebApi3.Contracts.Responses
 {

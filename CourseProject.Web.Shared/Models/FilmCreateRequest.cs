@@ -23,6 +23,7 @@ namespace CourseProject.Web.Shared.Models
         /// <summary>
         /// Identification rating kinopoisk.
         /// </summary>
+        [Required]
         public int IdRating { get; set; }
 
         /// <summary>

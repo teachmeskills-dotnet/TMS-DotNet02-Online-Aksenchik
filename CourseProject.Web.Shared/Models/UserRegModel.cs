@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CourseProject.Web.Shared.Models
 {
-    /// <summary>
-    /// User auth model.
-    /// </summary>
-    public class UserAuthModel
+    public class UserRegModel
     {
-        /// <summary>
-        /// Identifier.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// UserName.
         /// </summary>
@@ -26,13 +19,10 @@ namespace CourseProject.Web.Shared.Models
         public string Email { get; set; }
 
         /// <summary>
-        /// Token.
+        /// Password.
         /// </summary>
-        public string Token { get; set; }
+        public string Password { get; set; }
 
-        /// <summary>
-        /// Roles.
-        /// </summary>
-        public IList<string> Roles { get; set; }
+        public string Role { get; set; }
     }
 }

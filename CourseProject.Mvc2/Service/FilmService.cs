@@ -21,13 +21,13 @@ namespace CourseProject.Mvc2.Service
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async Task AddAsync(object value, string token)
+        public async Task AddAsync(object value/*, string token*/)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/Film/addfilm")
             {
                 Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json")
             };
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             using var response = await _httpClient.SendAsync(request);
 

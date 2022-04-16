@@ -36,12 +36,12 @@
             <div class="login__password">
                 @if (User.Identity.IsAuthenticated)
                 {
-                <div class="user__block">
-                    Hello, <a asp-controller="Account" asp-action="Profile" asp-route-username="@User.Identity.Name">@User.Identity.Name</a>
-                    <form method="post" asp-controller="Account" asp-action="Logout">
-                        <input class="registration__user button__use" type="submit" value="Выход" />
-                    </form>
-                </div>
+                    <div class="user__block">
+                        Hello, <a asp-controller="Account" asp-action="Profile" asp-route-username="@User.Identity.Name">@ViewBag.Email</a>
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input class="registration__user button__use" type="submit" value="Выход" />
+                        </form>
+                    </div>
                 }
                 else
                 {
@@ -57,9 +57,9 @@
                 <div class="search__button">
                     <input type="text" class="search" placeholder="В чем дело Док?">
                     <button class="button__search">
-                            <svg class="svg__search" width="17" height="17" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.7071 14.2929L22.7071 22.2929M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke-width="2" />
-                            </svg>
+                        <svg class="svg__search" width="17" height="17" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.7071 14.2929L22.7071 22.2929M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke-width="2" />
+                        </svg>
 
                     </button>
                 </div>
