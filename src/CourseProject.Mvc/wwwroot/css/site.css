@@ -1,0 +1,423 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    font-family: 'Cuprum', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
+    margin: 0;
+    background: white;
+    width: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+:focus::-webkit-input-placeholder {
+    color: transparent;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+:focus::-moz-placeholder {
+    color: transparent;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+:focus:-moz-placeholder {
+    color: transparent;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+:focus:-ms-input-placeholder {
+    color: transparent;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Rating */
+.rating {
+    width: 215px;
+    height: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .rating:not(:checked) > input {
+        display: none;
+    }
+
+    .rating:not(:checked) > label {
+        width: 25px;
+        cursor: pointer;
+        font-size: 25px;
+        color: lightgrey;
+        text-align: center;
+        line-height: 1;
+    }
+
+        .rating:not(:checked) > label:before {
+            content: '★';
+        }
+
+    .rating > input:checked ~ label {
+        color: gold;
+    }
+
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: gold;
+    }
+
+    .rating > input:checked + label:hover,
+    .rating > input:checked + label:hover ~ label,
+    .rating > input:checked ~ label:hover,
+    .rating > input:checked ~ label:hover ~ label,
+    .rating > label:hover ~ input:checked ~ label {
+        color: gold;
+    }
+
+/* Registration */
+.mine__form {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    color: #243B55;
+}
+
+.mine__input {
+    width: 300px;
+    height: 30px;
+    border-radius: 16px;
+    border: 1px solid #C7C7C7;
+    color: #7A7A7A;
+    padding-left: 10px;
+}
+
+.main__registration {
+    width: 925px;
+    height: 500px;
+    border: 1px solid #C7C7C7;
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    padding: 100px 212px 0px 212px;
+}
+
+.register__form{
+    width: 500px;
+}
+
+.registration__block {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.mine__button {
+    width: 100%;
+    height: 40px;
+    background: white;
+    border: 1px solid #C7C7C7;
+    border-radius: 5px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    line-height: 0;
+    color: #7A7A7A;
+    cursor: pointer;
+}
+
+    .mine__button:hover {
+        background: #243B55;
+        color: white;
+        transition: 0.1s linear;
+}
+
+/*Login*/
+.main__login {
+    width: 925px;
+    height: 500px;
+    border: 1px solid #C7C7C7;
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    padding: 100px 312px 0px 312px;
+}
+
+.login__form{
+    width: 300px;
+}
+/* Header */
+.header {
+    background-color: #243B55;
+    width: 100%;
+}
+
+.header__menu {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__logo {
+    font-family: 'Cuprum', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 42px;
+    line-height: 55px;
+    color: #FFFFFF;
+}
+
+.nav__menu {
+    width: 500px;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav__link {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 31px;
+    color: white;
+}
+
+    .nav__link:hover {
+        border-bottom: 2px solid white;
+    }
+
+/* User menu */
+.user__menu {
+    background-color: #F2F2F2;
+    border: 1px solid #C7C7C7;
+    height: 40px;
+    padding: 0 16px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registration__user {
+    font-size: 14px;
+}
+
+.input__use {
+    border-radius: 16px;
+    border: 1px solid #C7C7C7;
+    color: #7A7A7A;
+    width: 140px;
+    height: 20px;
+    padding-left: 10px;
+}
+
+.button__use {
+    /*width: 100%;*/
+    height: 50px;
+    background: white;
+    border: 1px solid #C7C7C7;
+    border-radius: 5px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    line-height: 0;
+    color: #7A7A7A;
+    cursor: pointer;
+}
+
+    .button__use:hover {
+        background: #243B55;
+        color: white;
+        transition: 0.1s linear;
+    }
+
+.search__films {
+    display: flex;
+}
+
+.extended__search {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 17px;
+    text-decoration-line: underline;
+    cursor: pointer;
+    color: #243B55;
+    margin-right: 10px;
+}
+
+.search {
+    padding-left: 10px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border: 1px solid #C7C7C7;
+    color: #7A7A7A;
+    width: 250px;
+    height: 20px;
+}
+
+.button__search {
+    background: white;
+    border: 1px solid #C7C7C7;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    cursor: pointer;
+    height: 20px;
+}
+
+.search__button {
+    display: flex;
+}
+
+/* New films */
+.new__films {
+    height: 255px;
+    border: 1px solid #C7C7C7;
+    background-color: #F2F2F2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.film__link {
+}
+
+.block__films {
+    width: 150px;
+    height: 245px;
+    background-color: #243B55;
+    border-radius: 7px;
+    border: 1px solid #2B5381;
+    padding: 4px 4px 0 4px;
+}
+
+.poster__film {
+    border-radius: 7px;
+    width: 140px;
+    height: 200px;
+    border: 1px solid #2B5381;
+}
+
+.name__film {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 87%;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+/* Main block */
+.main__block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main__films {
+    width: 925px;
+    height: 1144px;
+    border: 1px solid #C7C7C7;
+    background-color: #F2F2F2;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 4px 4px 0px 4px;
+}
+
+.post__films {
+    width: 225px;
+    height: 375px;
+    background-color: #243B55;
+    border-radius: 7px;
+    border: 1px solid #2B5381;
+    padding: 4px 4px 0 4px;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.main__poster {
+    border-radius: 7px;
+    border: 1px solid #2B5381;
+    width: 215px;
+}
+
+.post__name-block {
+    width: 215px;
+    height: 40px;
+}
+
+.post__name {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+/* Menu */
+.block__menu {
+    width: 270px;
+    height: 100px;
+    margin-top: 5px;
+    border: 1px solid #C7C7C7;
+    background-color: #F2F2F2;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.menu__name {
+    width: 268px;
+    height: 40px;
+    background-color: #243B55;
+    border-radius: 7px;
+    padding: 10px 0;
+}
+
+.menu__text {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 15px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+/* Footer */
+.footer__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 150px;
+}
+
+.footer {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #243B55;
+}
+
+.info__sub {
+    font-family: 'Cuprum', sans-serif;
+    font-size: 24px;
+    line-height: 31px;
+    color: #FFFFFF;
+}
