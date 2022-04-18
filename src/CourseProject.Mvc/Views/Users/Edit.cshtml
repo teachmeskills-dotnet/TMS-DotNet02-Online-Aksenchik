@@ -1,0 +1,22 @@
+﻿@model CourseProject.Mvc.ViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Редактирование пользователя";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<form asp-action="Edit" asp-controller="Users" class="main__users-edit">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div class="form__users">
+        <label asp-for="Email" class="mine__form">Email</label>
+        <input type="text" asp-for="Email" class="mine__input" />
+    </div>
+    <div class="form__users">
+        <label asp-for="Year" class="mine__form">Год рождения</label>
+        <input type="number" asp-for="Year" class="mine__input" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Сохранить" class="mine__button" />
+    </div>
+</form>

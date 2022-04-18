@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cuprum:wght@700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/admin.css">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <header class="header__block">
+        <div class="header__logo">Admin Panel</div>
+    </header>
+    <div class="container">
+        <div class="menu__block">
+            <div class="nav__link">
+                <div class="link__block">
+                    <a class="link__block-style" href="">Добавление новостей</a>
+                </div>
+                <div class="link__block">
+                    <a asp-controller="Users" asp-action="Index" class="link__block-style">Пользователи</a>
+                </div>
+                <div class="link__block">
+                    <a class="link__block-style" href="">Архив Новостей</a>
+                </div>
+                <div class="link__block">
+                    <a class="link__block-style" href="">Пример</a>
+                </div>
+                <div class="link__block">
+                    <a class="link__block-style" href="">Пример</a>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <main class="main__block">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

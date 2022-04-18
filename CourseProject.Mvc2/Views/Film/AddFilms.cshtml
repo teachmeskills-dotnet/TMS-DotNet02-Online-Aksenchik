@@ -1,0 +1,111 @@
+﻿@model FilmCreateRequest
+@{
+    ViewData["Title"] = "Добавление фильма";
+}
+
+<div class="main__addFilm">
+    <div class="registration__block">
+        <a asp-controller="Film" asp-action="Create" class="button__use">Редактирование постов</a>
+    </div>
+    <form asp-controller="Film" asp-action="AddFilms" method="post" enctype="multipart/form-data">
+        <div class="registration__block">
+            <label asp-for="NameFilms" class="mine__form">Название Фильма:</label>
+            <input type="text" asp-for="NameFilms" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="ReleaseDate" class="mine__form">Год:</label>
+            <input type="number" asp-for="ReleaseDate" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingImdb" class="mine__form">Рейтинг Imdb:</label>
+            <input type="number" asp-for="RatingImdb" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingKinopoisk" class="mine__form">Рейтинг Кинопоиск:</label>
+            <input type="text" asp-for="RatingKinopoisk" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
+            <input type="text" asp-for="RatingSite" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="IdRating" class="mine__form">Ид рейтинга кинопоиска:</label>
+            <input type="text" asp-for="IdRating" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="RatingSite" class="mine__form">Рейтинг сайта:</label>
+            <input type="text" asp-for="RatingSite" class="mine__input" />
+        </div>
+        @*
+
+        <div class="registration__block">
+            <label asp-for="Countries" class="mine__form">Страна:</label>
+            <input type="text" asp-for="Countries" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="Actors" class="mine__form">Актеры:</label>
+            <input type="text" asp-for="Actors" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="GenreName" class="mine__form">Жанры:</label>
+            <input type="text" asp-for="GenreName" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="StageManagers" class="mine__form">Режиссер:</label>
+            <input type="text" asp-for="StageManagers" class="mine__input" />
+        </div>*@
+        <div class="registration__block">
+            <label asp-for="AgeLimit" class="mine__form">Возрастное ограничение:</label>
+            <input type="text" asp-for="AgeLimit" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="Time" class="mine__form">Время:</label>
+            <input type="text" asp-for="Time" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="Description" class="mine__form">Описание:</label>
+            <input type="text" asp-for="Description" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <label asp-for="ReleaseDate" class="mine__form">Постер:</label>
+            <input type="file" name="uploadedFile" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <input type="submit" value="Добавить" class="mine__button" />
+        </div>
+    </form>
+</div>
+
+
+@*@model IEnumerable<CourseProject.Mvc2.Models.Film>
+    @{
+        ViewBag.Title = "Все пользователи";
+    }
+    <a asp-action="Create">Добавить пользователя</a>
+    <table class="table">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FilmName</td>
+                <td>
+                    <a asp-action="Details" asp-controller="Film" asp-route-id="@item.Id">Подробнее</a> |
+                    <a asp-action="Edit" asp-controller="Film" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Delete" asp-controller="Film" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </table>*@
+
+
+@*<h3>Выберите файл для загрузки</h3>
+    <form asp-action="AddFile" asp-controller="Film" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" />
+        <input type="submit" value="Загрузить" />
+    </form>
+
+    <h3>Все файлы</h3>
+    @foreach (var f in Model)
+    {
+        <p><img src="@Url.Content(f.Path)"></p>
+    }*@
