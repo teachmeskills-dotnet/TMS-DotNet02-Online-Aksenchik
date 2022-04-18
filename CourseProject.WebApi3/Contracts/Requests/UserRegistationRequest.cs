@@ -24,12 +24,12 @@ namespace CourseProject.WebApi3.Contracts.Requests
         [Required]
         public string Password { get; set; }
 
-        ///// <summary>
-        ///// Password Confirm.
-        ///// </summary>
-        //[Required]
-        //public string PasswordConfirm { get; set; }
+        /// <summary>
+        /// Password Confirm.
+        /// </summary>
+        [Required]
+        public string PasswordConfirm { get; set; }
 
-        
+
     }
 }

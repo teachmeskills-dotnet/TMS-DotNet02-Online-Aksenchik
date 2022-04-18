@@ -3,9 +3,11 @@ using CourseProject.Mvc2.Interfaces;
 using CourseProject.Web.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -44,7 +46,7 @@ namespace CourseProject.Mvc2.Controllers
             if (ModelState.IsValid)
             {
                 var (token, roles) = await _identityService.LoginAsync(request);
-                List<Claim> claims = new List<Claim>
+                var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, token),
                 };
@@ -61,7 +63,9 @@ namespace CourseProject.Mvc2.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            
+
+            // UNDONE: ModelError
+
             return View(request);
         }
 
@@ -95,6 +99,15 @@ namespace CourseProject.Mvc2.Controllers
             }
 
                 return View(request);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            // удаляем аутентификационные куки
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         //[HttpGet]
@@ -178,14 +191,7 @@ namespace CourseProject.Mvc2.Controllers
         //    return View(request);
         //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    // удаляем аутентификационные куки
-        //    await _signInManager.SignOutAsync();
-        //    return RedirectToAction("Index", "Home");
-        //}
+
 
         //public async Task<IActionResult> Profile(string userName)
         //{

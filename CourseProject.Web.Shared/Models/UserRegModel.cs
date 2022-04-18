@@ -9,11 +9,6 @@ namespace CourseProject.Web.Shared.Models
     public class UserRegModel
     {
         /// <summary>
-        /// UserName.
-        /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
         /// Email.
         /// </summary>
         public string Email { get; set; }
@@ -23,6 +18,9 @@ namespace CourseProject.Web.Shared.Models
         /// </summary>
         public string Password { get; set; }
 
-        public string Role { get; set; }
+        /// <summary>
+        /// Password confirm.
+        /// </summary>
+        public string PasswordConfirm { get; set; }
     }
 }

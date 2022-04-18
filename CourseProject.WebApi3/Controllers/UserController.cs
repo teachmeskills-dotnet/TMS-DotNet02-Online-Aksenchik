@@ -42,14 +42,14 @@ namespace CourseProject.WebApi3.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(UserLoginRequest model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
             {
                 return BadRequest(new { message = "Неправильный логин и (или) пароль" });
             }
 
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             var token = _jwtService.GenerateJwtToken(user.Id, _appSettings.Secret);
             var userRoles = await _userManager.GetRolesAsync(user);
             var response = new AuthenticateResponse(user, token, userRoles);
@@ -63,19 +63,29 @@ namespace CourseProject.WebApi3.Controllers
             var user = new User
             {
                 Email = request.Email,
-                UserName = request.UserName
+                UserName = request.Email
             };
 
-            var result = await _userManager.CreateAsync(user, request.Password);
-            await _userManager.AddToRoleAsync(user, "User");
-
-            if (!result.Succeeded)
+            if (request.Password == request.PasswordConfirm)
             {
+                var result = await _userManager.CreateAsync(user, request.Password);
+                await _userManager.AddToRoleAsync(user, "User");
 
+                if (!result.Succeeded)
+                {
+
+                    return BadRequest(new ErrorResponse<string>
+                    {
+                        Message = "Can't registration new user.",
+                        
+                    });
+                }
+            }
+            else
+            {
                 return BadRequest(new ErrorResponse<string>
                 {
-                    Message = "Can't registration new user.",
-                    Errors = result.Errors.Select(error => error.Description)
+                    Message = "Пароли не совпадают."
                 });
             }
 
@@ -84,6 +94,13 @@ namespace CourseProject.WebApi3.Controllers
             var response = new AuthenticateResponse(user, token, userRoles);
 
             return Ok(response);
+        }
+
+        [HttpPost("logout")]
+        public async Task<OkResult> LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok();
         }
 
         //[HttpPost("registration")]

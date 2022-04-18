@@ -84,7 +84,7 @@ namespace CourseProject.WebApi3.Middlewares
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Email = user.Email,
+                    Email = user.Email
                 };
 
                 context.Items["User"] = userModel;

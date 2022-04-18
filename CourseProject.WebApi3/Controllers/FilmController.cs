@@ -20,7 +20,7 @@ namespace CourseProject.WebApi.Controllers
 
         // POST api/<FilmController>
         [HttpPost("addfilm")]
-        public async Task<IActionResult> CreateAsync([FromBody] FilmCreateRequest request)
+        public async Task<IActionResult> CreateAsync([FromBody] FilmDto request)
         {
             var film = new FilmDto
             {
@@ -52,14 +52,14 @@ namespace CourseProject.WebApi.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        //// GET api/<FilmController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/<FilmController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var film = await _filmManager.GetByIdAsync(id);
 
-
+            return Ok(film);
+        }
 
         //// PUT api/<FilmController>/5
         //[HttpPut("{id}")]

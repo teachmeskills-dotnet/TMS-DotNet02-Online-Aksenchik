@@ -1,8 +1,4 @@
-﻿using CourseProject.Mvc2.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Interfaces
 {
@@ -13,6 +9,6 @@ namespace CourseProject.Mvc2.Interfaces
         /// </summary>
         /// <param name="value">Object.</param>
         /// <param name="token">Jwt token.</param>
-        Task AddAsync(object value/*, string token*/);
+        Task AddAsync(object value, string token);
     }
 }

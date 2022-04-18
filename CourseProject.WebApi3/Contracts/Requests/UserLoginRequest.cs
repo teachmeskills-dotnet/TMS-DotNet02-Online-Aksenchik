@@ -6,11 +6,17 @@ namespace CourseProject.WebApi3.Contracts.Requests
 {
     public class UserLoginRequest
     {
+        ///// <summary>
+        ///// User name.
+        ///// </summary>
+        //[Required]
+        //public string UserName { get; set; }
+
         /// <summary>
-        /// User name.
+        /// Email.
         /// </summary>
         [Required]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Password.

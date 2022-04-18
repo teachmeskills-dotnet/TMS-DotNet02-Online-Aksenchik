@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Interfaces
@@ -23,6 +24,6 @@ namespace CourseProject.Mvc2.Interfaces
         /// </summary>
         /// <param name="value">Object.</param>
         /// <returns>Jwt token.</returns>
-        Task<(string, string, string)> RegisterAsync(object value);
+        Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value);
     }
 }

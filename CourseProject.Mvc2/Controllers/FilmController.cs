@@ -1,5 +1,4 @@
-﻿using CourseProject.Mvc2.ViewModels;
-using CourseProject.Mvc2.Models;
+﻿using CourseProject.Mvc2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -73,8 +72,8 @@ namespace CourseProject.Mvc2.Controllers
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            //var token = User.FindFirst(ClaimTypes.Name).Value;
-                await _filmService.AddAsync(request/*, token*/);
+            var token = User.FindFirst(ClaimTypes.Name).Value;
+            await _filmService.AddAsync(request, token);
             return RedirectToAction("Index", "Home");
         }
 

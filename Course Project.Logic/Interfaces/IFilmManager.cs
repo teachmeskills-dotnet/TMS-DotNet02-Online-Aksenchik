@@ -1,4 +1,5 @@
 ﻿using Course_Project.Logic.Models;
+using CourseProject.Web.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,14 @@ namespace Course_Project.Logic.Interfaces
         /// Create film.
         /// </summary>
         /// <param name="model">film data transfer object.</param>
-        Task CreateAsync(FilmDto model);
+        Task CreateAsync(FilmDto filmDto, ActorDto actorDto);
 
         /// <summary>
         /// Get film by identifier.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Film data transfer object.</returns>
-        Task<FilmDto> GetByIdAsync(int id);
+        Task<FilmViewModel> GetByIdAsync(int id);
 
         /// <summary>
         /// Update film by identifier.

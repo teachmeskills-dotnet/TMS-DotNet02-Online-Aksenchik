@@ -9,7 +9,7 @@ namespace Course_Project.Logic.Models
     /// <summary>
     /// Film country.
     /// </summary>
-    public class FilmCountry
+    public class FilmCountryDto
     {
         /// <summary>
         /// Identification.

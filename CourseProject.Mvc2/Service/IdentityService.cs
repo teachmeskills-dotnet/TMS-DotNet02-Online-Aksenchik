@@ -4,6 +4,7 @@ using CourseProject.Web.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -39,7 +40,7 @@ namespace CourseProject.Mvc2.Service
             return (record.Token, record.Roles);
         }
 
-        public async Task<(string, string, string)> RegisterAsync(object value)
+        public async Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "api/user/registration");
             request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
@@ -55,7 +56,7 @@ namespace CourseProject.Mvc2.Service
 
             var record = await response.Content.ReadFromJsonAsync<UserRegModel>();
             
-            return (record.Email, record.UserName, record.Password);
+            return (record.Email, record.Password, record.PasswordConfirm);
         }
     }
 }
