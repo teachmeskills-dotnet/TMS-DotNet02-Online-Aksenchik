@@ -3,6 +3,7 @@ using Course_Project.Logic.Models;
 using CourseProject.Web.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseProject.WebApi.Controllers
@@ -20,9 +21,14 @@ namespace CourseProject.WebApi.Controllers
 
         // POST api/<FilmController>
         [HttpPost("addfilm")]
-        public async Task<IActionResult> CreateAsync([FromBody] FilmDto request)
+        public async Task<IActionResult> CreateAsync([FromBody] FilmCreateRequest request)
         {
-            var film = new FilmDto
+            var filmActorDtos = new List<FilmActorDto>();
+            var filmGenreDtos = new List<FilmGenreDto>();
+            var filmCountryDtos = new List<FilmCountryDto>();
+            var filmStageManagerDtos = new List<FilmStageManagerDto>();
+
+            FilmDto filmDto = new()
             {
                 ImageName = request.NameFilms,
                 PathPoster = request.PathPoster,
@@ -34,25 +40,53 @@ namespace CourseProject.WebApi.Controllers
                 IdRating = request.IdRating,
                 RatingImdb = request.RatingImdb,
                 RatingKinopoisk = request.RatingKinopoisk,
-                RatingSite = request.RatingSite
+                RatingSite = request.RatingSite,
             };
+
+            foreach (var item in request.ActorIds)
+            {
+                filmActorDtos.Add(new FilmActorDto
+                {
+                    ActorId = item
+                });
+            }
+
+            foreach (var item in request.GenreIds)
+            {
+                filmGenreDtos.Add(new FilmGenreDto
+                {
+                    GenreId = item
+                });
+            }
+
+            foreach (var item in request.CountryIds)
+            {
+                filmCountryDtos.Add(new FilmCountryDto
+                {
+                    CountryId = item
+                });
+            }
+
+            foreach (var item in request.StageManagerIds)
+            {
+                filmStageManagerDtos.Add(new FilmStageManagerDto
+                {
+                    StageManagerId = item
+                });
+            }
 
             if (ModelState.IsValid)
             {
-                await _filmManager.CreateAsync(film);
+               await _filmManager.CreateAsync(filmDto, 
+                   filmActorDtos, 
+                   filmGenreDtos, 
+                   filmCountryDtos, 
+                   filmStageManagerDtos);
             }
-            return Ok();
 
+            return Ok();
         }
 
-        //// GET: api/<FilmController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET api/<FilmController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -61,17 +95,19 @@ namespace CourseProject.WebApi.Controllers
             return Ok(film);
         }
 
-        //// PUT api/<FilmController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpGet("allFilms")]
+        public async Task<IActionResult> GetAll()
+        {
+            var film = await _filmManager.GetAllAsync();
 
-        //// DELETE api/<FilmController>/5
-        //[HttpDelete("{id}")]
-        //public async Task DeleteAsync(int id)
-        //{
-        //    await _filmManager.DeleteAsync(id);
-        //}
+            return Ok(film);
+        }
+
+        // DELETE api/<FilmController>/5
+        [HttpDelete("{id}")]
+        public async Task DeleteAsync(int id)
+        {
+            await _filmManager.DeleteAsync(id);
+        }
     }
 }

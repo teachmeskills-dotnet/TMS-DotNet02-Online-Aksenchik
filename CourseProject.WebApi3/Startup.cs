@@ -32,6 +32,10 @@ namespace CourseProject.WebApi3
             // Custom managers & services
             services.AddScoped(typeof(IRepositoryManager<>), typeof(RepositoryManager<>));
             services.AddScoped<IFilmManager, FilmManager>();
+            services.AddScoped<IActorManager, ActorManager>();
+            services.AddScoped<IGenreManager, GenreManager>();
+            services.AddScoped<ICountryManager, CountryManager>();
+            services.AddScoped<IStageManagerManager, StageManagerManager>();
             services.AddScoped<IJwtService, JwtService>();
 
             services.AddIdentity<User, IdentityRole>(opts => {
