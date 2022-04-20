@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Course_Project.Logic.Models
 {
     /// <summary>

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.Web.Shared.Models
 {
     public class FilmCreateRequest
     {
-        /// <summary>
-        /// Id.
-        /// </summary>
-        [Required]
-        public int Id { get; set; }
         /// <summary>
         /// Name.
         /// </summary>
@@ -55,29 +47,29 @@ namespace CourseProject.Web.Shared.Models
         [Required]
         public int ReleaseDate { get; set; }
 
-        ///// <summary>
-        ///// Actor.
-        ///// </summary>
-        //[Required]
-        //public string Countries { get; set; }
-
         /// <summary>
-        /// Actor.
+        /// Country identification.
         /// </summary>
         [Required]
-        public string FirstName { get; set; }
+        public List<int> CountryIds { get; set; }
 
-        ///// <summary>
-        ///// Genre.
-        ///// </summary>
-        //[Required]
-        //public string GenreName { get; set; }
+        /// <summary>
+        /// Actor identification.
+        /// </summary>
+        [Required]
+        public List<int> ActorIds { get; set; }
 
-        ///// <summary>
-        ///// Stage manager.
-        ///// </summary>
-        //[Required]
-        //public string StageManagers { get; set; }
+        /// <summary>
+        /// Genre identification.
+        /// </summary>
+        [Required]
+        public List<int> GenreIds { get; set; }
+
+        /// <summary>
+        /// Stage manager identification.
+        /// </summary>
+        [Required]
+        public List<int> StageManagerIds { get; set; }
 
         /// <summary>
         /// Description.

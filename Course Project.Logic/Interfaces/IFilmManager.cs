@@ -1,5 +1,5 @@
 ﻿using Course_Project.Logic.Models;
-using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +17,18 @@ namespace Course_Project.Logic.Interfaces
         /// Create film.
         /// </summary>
         /// <param name="model">film data transfer object.</param>
-        Task CreateAsync(FilmDto filmDto, ActorDto actorDto);
+        Task CreateAsync(FilmDto filmDto, 
+            List<FilmActorDto> filmActorDto, 
+            List<FilmGenreDto> filmGenreDto,
+            List<FilmCountryDto> filmCountryDto,
+            List<FilmStageManagerDto> filmStageManagerDto);
 
         /// <summary>
         /// Get film by identifier.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Film data transfer object.</returns>
-        Task<FilmViewModel> GetByIdAsync(int id);
+        Task<FilmModelResponse> GetByIdAsync(int id);
 
         /// <summary>
         /// Update film by identifier.
@@ -39,10 +43,9 @@ namespace Course_Project.Logic.Interfaces
         Task DeleteAsync(int id);
 
         /// <summary>
-        /// Get films by film identifier.
+        /// Get all Film.
         /// </summary>
-        /// <param name="filmId">Film identifier.</param>
         /// <returns>Film data transfer objects.</returns>
-        Task<IEnumerable<FilmDto>> GetAllByUserIdAsync(string filmId);
+        Task<IEnumerable<FilmDto>> GetAllAsync();
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
-namespace CourseProject.Web.Shared.Models
+namespace CourseProject.Web.Shared.Models.Responses
 {
-    public class FilmViewModel
+    public class FilmModelResponse
     {
         public int Id { get; set; }
 

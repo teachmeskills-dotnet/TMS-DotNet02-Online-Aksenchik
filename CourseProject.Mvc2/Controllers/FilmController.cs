@@ -45,7 +45,7 @@ namespace CourseProject.Mvc2.Controllers
                 Film film = await _context.Films.FirstOrDefaultAsync(p => p.Id == id);
                 if (film != null)
                 {
-                    FilmViewModel model = new()
+                    FilmModelResponse model = new()
                     {
                         Id = film.Id,
                         NameFilms = film.NameFilms,
