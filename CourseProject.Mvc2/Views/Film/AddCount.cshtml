@@ -1,0 +1,16 @@
+﻿@model CountryCreateRequest
+@{
+    ViewData["Title"] = "Добавление страны";
+}
+
+<div class="main__addFilm">
+    <form asp-controller="Film" asp-action="AddCount" method="post">
+        <div class="registration__block">
+            <label asp-for="Country" class="mine__form">Страна:</label>
+            <input type="text" asp-for="Country" class="mine__input" />
+        </div>
+        <div class="registration__block">
+            <input type="submit" value="Добавить" class="mine__button" />
+        </div>
+    </form>
+</div>

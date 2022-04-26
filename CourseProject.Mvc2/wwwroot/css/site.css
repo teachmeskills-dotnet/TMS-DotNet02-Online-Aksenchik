@@ -17,9 +17,27 @@
     box-sizing: border-box;
 }
 
+.add__input {
+    cursor: pointer;
+}
+
 a {
     text-decoration: none;
     color: none;
+}
+
+.registration__block-list {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.new-item {
+    margin-bottom: 10px;
+}
+
+.block-list{
+    text-align: center;
 }
 
 .light-theme input {
@@ -54,6 +72,10 @@ a {
     margin: 0 auto;
 }
 
+.new__item {
+    line-height: 0.2em;
+    font-size: 1em;
+}
 /* Rating */
 .rating {
     width: 215px;

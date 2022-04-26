@@ -19,19 +19,32 @@ namespace Course_Project.Logic.Managers
         private readonly IRepositoryManager<FilmCountry> _filmCountryRepository;
         private readonly IRepositoryManager<FilmGenre> _filmGenreRepository;
         private readonly IRepositoryManager<FilmStageManager> _filmStageManagerRepository;
+        private readonly IRepositoryManager<State> _countryRepository;
+        private readonly IRepositoryManager<Genre> _genreRepository;
+        private readonly IRepositoryManager<StageManager> _stageManagerRepository;
+        private readonly IRepositoryManager<Actor> _actorRepository;
+
 
 
         public FilmManager(IRepositoryManager<Film> filmRepository, 
                            IRepositoryManager<FilmActor> filmActorRepository, 
                            IRepositoryManager<FilmCountry> filmCountryRepository,
                            IRepositoryManager<FilmGenre> filmGenreRepository,
-                           IRepositoryManager<FilmStageManager> filmStageManagerRepository)
+                           IRepositoryManager<FilmStageManager> filmStageManagerRepository,
+                           IRepositoryManager<State> countryRepository,
+                           IRepositoryManager<Genre> genreRepository,
+                           IRepositoryManager<StageManager> stageManagerRepository,
+                           IRepositoryManager<Actor> actorRepository)
         {
             _filmRepository = filmRepository ?? throw new ArgumentNullException(nameof(filmRepository));
             _filmActorRepository = filmActorRepository ?? throw new ArgumentNullException(nameof(filmActorRepository));
             _filmCountryRepository = filmCountryRepository ?? throw new ArgumentNullException(nameof(filmCountryRepository));
             _filmGenreRepository = filmGenreRepository ?? throw new ArgumentNullException(nameof(filmGenreRepository));
             _filmStageManagerRepository = filmStageManagerRepository ?? throw new ArgumentNullException(nameof(filmStageManagerRepository));
+            _countryRepository = countryRepository ?? throw new ArgumentNullException(nameof(countryRepository));
+            _genreRepository = genreRepository ?? throw new ArgumentNullException(nameof(genreRepository));
+            _stageManagerRepository = stageManagerRepository ?? throw new ArgumentNullException(nameof(stageManagerRepository));
+            _actorRepository = actorRepository ?? throw new ArgumentNullException(nameof(actorRepository));
         }
 
         public async Task CreateAsync(FilmDto filmDto, 
@@ -114,24 +127,21 @@ namespace Course_Project.Logic.Managers
             await _filmRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FilmDto>> GetAllAsync()
+        public async Task<IEnumerable<FilmDto>> GetAllShortAsync()
         {
             var FilmDtos = new List<FilmDto>();
 
             var films = await _filmRepository
-                .GetAll()
-                .Select(f => new Film
-                {
-                    Id = f.Id,
-                    NameFilms = f.NameFilms
-                }).ToListAsync();
+                .GetAll().ToListAsync();
 
             foreach (var item in films)
             {
                 FilmDtos.Add(new FilmDto
                 {
                     Id = item.Id,
-                    NameFilms = item.NameFilms
+                    NameFilms = item.NameFilms,
+                    ReleaseDate = item.ReleaseDate,
+                    PathPoster = item.PathPoster
                 });
             }
             return FilmDtos;
@@ -139,16 +149,40 @@ namespace Course_Project.Logic.Managers
 
         public async Task<FilmModelResponse> GetByIdAsync(int id)
         {
-           var film = await _filmRepository.GetEntityAsync(f => f.Id == id);
+            Film film = await _filmRepository.GetEntityAsync(f => f.Id == id);
+            var filmCountryIds = await _filmCountryRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.CountryId).ToListAsync();
+            var countries = await _countryRepository.GetAll().Where(c => filmCountryIds.Contains(c.Id)).Select(c => c.Country).ToListAsync();
+
+            var filmGenreIds = await _filmGenreRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.GenreId).ToListAsync();
+            var genres = await _genreRepository.GetAll().Where(g => filmGenreIds.Contains(g.Id)).Select(g => g.Genres).ToListAsync();
+
+            var filmStageManagerIds = await _filmStageManagerRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.StageManagerId).ToListAsync();
+            var stageManagers = await _stageManagerRepository.GetAll().Where(m => filmStageManagerIds.Contains(m.Id)).Select(m => m.StageManagers).ToListAsync();
+
+            var filmActorIds = await _filmActorRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.ActorId).ToListAsync();
+            var actors = await _actorRepository.GetAll().Where(a => filmActorIds.Contains(a.Id)).Select(a =>  new Actor
+            {
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+            }).ToListAsync();
+
             FilmModelResponse model = new()
             {
                 Id = film.Id,
                 NameFilms = film.NameFilms,
+                ImageName = film.ImageName,
                 PathPoster = film.PathPoster,
                 ReleaseDate = film.ReleaseDate,
+                RatingKinopoisk = film.RatingKinopoisk,
+                RatingImdb = film.RatingImdb,
+                RatingSite = film.RatingSite,
                 AgeLimit = film.AgeLimit,
                 Time = film.Time,
                 Description = film.Description,
+                Country = countries,
+                Genre = genres,
+                StageManagers = stageManagers,
+                Actors = actors
             };
 
             return model;

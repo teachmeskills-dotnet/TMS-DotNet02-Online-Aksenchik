@@ -43,9 +43,9 @@ namespace Course_Project.Logic.Interfaces
         Task DeleteAsync(int id);
 
         /// <summary>
-        /// Get all Film.
+        /// Get all short information Film.
         /// </summary>
         /// <returns>Film data transfer objects.</returns>
-        Task<IEnumerable<FilmDto>> GetAllAsync();
+        Task<IEnumerable<FilmDto>> GetAllShortAsync();
     }
 }

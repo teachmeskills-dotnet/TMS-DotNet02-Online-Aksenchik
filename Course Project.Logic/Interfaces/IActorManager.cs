@@ -1,5 +1,6 @@
 ﻿using Course_Project.Logic.Models;
 using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
