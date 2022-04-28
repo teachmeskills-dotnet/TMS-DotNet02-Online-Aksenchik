@@ -1,4 +1,5 @@
-﻿using CourseProject.Web.Shared.Models.Responses;
+﻿using CourseProject.Web.Shared.Models.Request;
+using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,7 +26,13 @@ namespace CourseProject.Mvc2.Interfaces
         /// </summary>
         /// <param name="token">Jwt token.</param>
         /// <returns>Film collection.</returns>
-        Task<IEnumerable<FilmShortModelResponse>> GetAllShortAsync(string token);
+        Task<IEnumerable<FilmShortModelResponse>> GetAllShortAsync();
+
+        /// <summary>
+        /// Get all genre.
+        /// </summary>
+        /// <returns>Genre collection.</returns>
+        Task<IEnumerable<GenreModelResponse>> GetAllGenreAsync();
 
         /// <summary>
         /// Get all films.
@@ -33,5 +40,17 @@ namespace CourseProject.Mvc2.Interfaces
         /// <param name="token">Jwt token.</param>
         /// <returns>Film collection.</returns>
         Task<FilmModelResponse> GetByIdAsync(int id,string token);
+
+        /// <summary>
+        /// Get all films by name.
+        /// </summary>
+        /// <returns>Film collection.</returns>
+        Task<FilmShortModelResponse> GetByNameAsync(string name);
+
+        /// <summary>
+        /// Get all films by genre id.
+        /// </summary>
+        /// <returns>Film collection.</returns>
+        Task<IEnumerable<FilmShortModelResponse>> GetByGenreIdAsync(int genreId);
     }
 }

@@ -2,6 +2,7 @@
 using Course_Project.Logic.Exceptions;
 using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Models;
+using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -147,6 +148,31 @@ namespace Course_Project.Logic.Managers
             return FilmDtos;
         }
 
+        public async Task<IEnumerable<FilmDto>> GetByGenreAsync(int idGenre)
+        {
+            var filmGenreIds = await _filmGenreRepository.GetAll().Where(f => f.GenreId == idGenre).Select(f => f.FilmId).ToListAsync();
+
+            var filmGenreLists = new List<FilmDto>();
+
+            foreach (var item in filmGenreIds)
+            {
+                var resultFilm = await _filmRepository.GetAll().Where(f => f.Id == item).ToListAsync();
+                foreach (var film in resultFilm)
+                {
+                    filmGenreLists.Add(new FilmDto
+                    {
+                        Id = film.Id,
+                        NameFilms = film.NameFilms,
+                        ReleaseDate = film.ReleaseDate,
+                        PathPoster = film.PathPoster
+                    });
+                }
+                
+            }
+
+            return filmGenreLists;
+        }
+
         public async Task<FilmModelResponse> GetByIdAsync(int id)
         {
             Film film = await _filmRepository.GetEntityAsync(f => f.Id == id);
@@ -183,6 +209,26 @@ namespace Course_Project.Logic.Managers
                 Genre = genres,
                 StageManagers = stageManagers,
                 Actors = actors
+            };
+
+            return model;
+        }
+
+        public async Task<FilmShortModelResponse> GetByNameAsync(string nameSearch) //Сделать поиск по сайту
+        {
+            Film film = await _filmRepository.GetAll().FirstOrDefaultAsync(f => f.NameFilms == nameSearch);
+
+            if (film is null)
+            {
+                throw new NotFoundException($"'{nameof(film.NameFilms)}' film not found.", nameof(film.NameFilms));
+            }
+
+            FilmShortModelResponse model = new()
+            {
+                Id = film.Id,
+                NameFilms = film.NameFilms,
+                PathPoster = film.PathPoster,
+                ReleaseDate = film.ReleaseDate,
             };
 
             return model;

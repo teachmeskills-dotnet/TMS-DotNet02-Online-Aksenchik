@@ -35,7 +35,7 @@ namespace CourseProject.WebApi3.Controllers
         }
 
         [HttpGet("allGenre")]
-        public async Task<IActionResult> GetAllActor()
+        public async Task<IActionResult> GetAllGenre()
         {
             var genres = await _genreManager.GetAllAsync();
 

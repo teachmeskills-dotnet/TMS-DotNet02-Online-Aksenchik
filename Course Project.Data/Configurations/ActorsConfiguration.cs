@@ -30,7 +30,6 @@ namespace Course_Project.Data.Configurations
                .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
 
             builder.Property(actor => actor.SecondName)
-               .IsRequired()
                .HasMaxLength(SqlConfiguration.SqlMaxLengthMedium);
         }
     }

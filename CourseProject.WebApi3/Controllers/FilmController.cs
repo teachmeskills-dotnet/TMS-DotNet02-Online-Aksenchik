@@ -1,6 +1,8 @@
 ﻿using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Models;
 using CourseProject.Web.Shared.Models.Request;
+using CourseProject.Web.Shared.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,8 +39,8 @@ namespace CourseProject.WebApi.Controllers
 
 
             var idRating = request.IdRating;
-            Uri baseURI = new Uri("https://rating.kinopoisk.ru/");
-            Uri XmlPuth = new Uri(baseURI, $"{idRating}.xml");
+            Uri baseURI = new("https://rating.kinopoisk.ru/");
+            Uri XmlPuth = new(baseURI, $"{idRating}.xml");
             string xmlStr;
             using (var wc = new WebClient())
             {
@@ -120,6 +122,35 @@ namespace CourseProject.WebApi.Controllers
             var film = await _filmManager.GetByIdAsync(id);
 
             return Ok(film);
+        }
+
+        [HttpGet("name")]
+        public async Task<IActionResult> GetName([FromBody] string name)
+        {
+            var film = await _filmManager.GetByNameAsync(name);
+            if (film is null)
+            {
+                return NotFound(film);
+            }
+            return Ok(film);
+        }
+
+        [HttpGet("genre")]
+        public async Task<IActionResult> GetAllFilmsByGenre([FromBody] int genre) //Доделать вывод в mvc
+        {
+            var film = await _filmManager.GetByGenreAsync(genre);
+            var result = new List<FilmShortModelResponse>();
+            foreach (var item in film)
+            {
+                result.Add(new FilmShortModelResponse
+                {
+                    Id = item.Id,
+                    NameFilms = item.NameFilms,
+                    ReleaseDate = item.ReleaseDate,
+                    PathPoster = item.PathPoster
+                });
+            }
+            return Ok(result);
         }
 
         [HttpGet("allFilms")]

@@ -76,6 +76,26 @@ a {
     line-height: 0.2em;
     font-size: 1em;
 }
+
+/* Search */
+.light-theme .search__main {
+    display: flex;
+    flex-direction: column;
+}
+
+.light-theme .main__search {
+    width: 925px;
+    border: 1px solid #C7C7C7;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0px;
+}
+
+.search__button {
+    display: flex;
+    justify-content: center;
+}
+
 /* Rating */
 .rating {
     width: 215px;
@@ -303,6 +323,7 @@ a {
     font-weight: 500;
     padding: 5px;
     cursor: pointer;
+    margin: 0px 3px;
 }
 
     .light-theme .button__use:hover {
@@ -352,14 +373,11 @@ a {
     stroke: #243B55;
 }
 
-.search__button {
-    display: flex;
-}
-
 /* New films */
 .light-theme .new__films {
     height: 255px;
     border: 1px solid #C7C7C7;
+    border-top: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -400,6 +418,7 @@ a {
     width: 925px;
     height: 1144px;
     border: 1px solid #C7C7C7;
+    border-top: none;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -437,20 +456,16 @@ a {
 
 /* Menu */
 .light-theme .block__menu {
+    
+}
+
+.light-theme .menu__name {
     width: 270px;
-    height: 100px;
     margin-top: 5px;
     border: 1px solid #C7C7C7;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-}
-
-.light-theme .menu__name {
-    width: 268px;
-    height: 40px;
-    background-color: #243B55;
-    border-radius: 7px;
-    padding: 10px 0;
+    padding: 10px;
 }
 
 .light-theme .menu__text {
@@ -459,8 +474,36 @@ a {
     line-height: 15px;
     text-align: center;
     color: white;
+    height: 40px;
+    background-color: #243B55;
+    border-radius: 7px;
+    padding: 10px;
 }
 
+.light-theme .name__genre {
+    width: 50%;
+    font-size: 1em;
+    line-height: 1em;
+    text-align: center;
+    color: #243B55;
+}
+
+.light-theme .all_genres {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 270px;
+    border: 1px solid #C7C7C7;
+    border-top: none;
+    padding: 10px;
+}
+
+.light-theme .genre__block-link {
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: 120px;
+}
 /* Footer */
 .footer__main {
     display: flex;
@@ -872,15 +915,6 @@ a {
     padding: 0 15px;
 }
 
-.dark-theme .block__menu {
-    width: 270px;
-    height: 100px;
-    margin-top: 5px;
-    border: 1px solid #313131;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
 .dark-theme .main__view-film {
     width: 925px;
     border: 1px solid #313131;
@@ -907,11 +941,7 @@ a {
 }
 
 .dark-theme .menu__name {
-    width: 268px;
-    height: 40px;
-    background-color: #111c29;
-    border-radius: 7px;
-    padding: 10px 0;
+    border: 1px solid #313131;
 }
 
 .dark-theme .post__films {
@@ -976,10 +1006,15 @@ a {
     }
 
 .dark-theme .menu__text {
-    font-weight: 300;
-    font-size: 20px;
-    line-height: 15px;
-    text-align: center;
+    color: #c8c8c8;
+    background-color: #19293b;
+}
+
+.dark-theme .all_genres {
+    border: 1px solid #313131;
+}
+
+.dark-theme .name__genre {
     color: #c8c8c8;
 }
 

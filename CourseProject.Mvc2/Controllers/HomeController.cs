@@ -1,6 +1,6 @@
 ﻿using CourseProject.Mvc2.Interfaces;
+using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,8 +18,22 @@ namespace CourseProject.Mvc2.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var token = User.FindFirst(ClaimTypes.Name).Value;
-            var result = await _filmService.GetAllShortAsync(token);
+            var result = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = result;
+            return View(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string name)
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection;
+            var result = await _filmService.GetByNameAsync(name);
+
             return View(result);
         }
 

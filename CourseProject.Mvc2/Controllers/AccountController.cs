@@ -16,19 +16,25 @@ namespace CourseProject.Mvc2.Controllers
     public class AccountController : Controller
     {
         public readonly IIdentityService _identityService;
+        private readonly IFilmService _filmService;
 
-        public AccountController(IIdentityService identityService)
+        public AccountController(IIdentityService identityService, IFilmService filmService)
         {
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _filmService = filmService ?? throw new ArgumentNullException(nameof(filmService));
         }
 
         /// <summary>
         /// Login (Get).
         /// </summary>
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> LoginAsync()
         {
             var viewModel = new UserLoginRequest();
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection;
 
             return View(viewModel);
         }
@@ -73,9 +79,13 @@ namespace CourseProject.Mvc2.Controllers
         /// Login (Get).
         /// </summary>
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> RegisterAsync()
         {
             var viewModel = new UserRegistationRequest();
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection;
 
             return View(viewModel);
         }
