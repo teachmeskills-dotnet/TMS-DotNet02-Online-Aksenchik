@@ -1,5 +1,4 @@
-﻿@*@model CourseProject.Mvc2.ViewModels.FilmViewModel*@
-@model CourseProject.Mvc2.Models.Film
+﻿@model FilmModelResponse
 @{
     ViewBag.Title = @Html.DisplayFor(model => model.NameFilms);
 }
@@ -19,32 +18,47 @@
                 </div>
                 <div class="data__size">
                     <div class="film__country film__about-style">Страна:</div>
-                    <div class="film__year film__about-style">
-                        @foreach (State item in Model.States)
+                    <div class="new__item film__country">
+                        @foreach (var item in Model.Country)
                         {
-                            @item.Country
+                            <p>@item</p>
                         }
                     </div>
                 </div>
                 <div class="data__size">
                     <div class="film__genre film__about-style">Жанр:</div>
-                    <div class="film__year film__about-style"></div>
+                    <div class="film__genre new__item">
+                        @foreach (var item in Model.Genre)
+                        {
+                            <p>@item</p>
+                        }
+                    </div>
                 </div>
                 <div class="data__size">
                     <div class="film__age film__about-style">Возраст:</div>
-                    <div class="film__year film__about-style">@Html.DisplayFor(model => model.AgeLimit)+</div>
+                    <div class="film__age film__about-style">@Html.DisplayFor(model => model.AgeLimit)+</div>
                 </div>
                 <div class="data__size">
                     <div class="film__manager film__about-style">Режиссер:</div>
-                    <div class="film__year film__about-style"></div>
+                    <div class="film__manager new__item">
+                        @foreach (var item in Model.StageManagers)
+                        {
+                            <p>@item</p>
+                        }
+                    </div>
                 </div>
                 <div class="data__size">
                     <div class="film__time film__about-style">Время:</div>
-                    <div class="film__year film__about-style">@Html.DisplayFor(model => model.Time)</div>
+                    <div class="film__time film__about-style">@Html.DisplayFor(model => model.Time)</div>
                 </div>
                 <div class="data__size">
                     <div class="film__role film__about-style">В главных ролях:</div>
-                    <div class="film__roles film__about-style">РОли</div>
+                    <div class="film__role new__item">
+                        @foreach (var item in Model.Actors)
+                        {
+                            <p>@item.FirstName @item.LastName</p>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,9 +76,9 @@
         </div>
 
         <div class="rating__world">
-            <div class="rating__sait">Рейтинг сайта: </div>
-            <div class="rating__kinopoisk">kinopoisk: </div>
-            <div class="rating__imdb">IMDb: </div>
+            <div class="rating__sait">Рейтинг сайта: @Html.DisplayFor(model => model.RatingSite)</div>
+            <div class="rating__kinopoisk">kinopoisk: @Html.DisplayFor(model => model.RatingKinopoisk)</div>
+            <div class="rating__imdb">IMDb: @Html.DisplayFor(model => model.RatingImdb)</div>
         </div>
     </div>
     <div class="film__play">

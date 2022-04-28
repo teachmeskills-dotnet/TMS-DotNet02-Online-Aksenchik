@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CourseProject.Web.Shared.Models
+namespace CourseProject.Web.Shared.Models.Request
 {
     public class FilmCreateRequest
     {
@@ -26,8 +26,8 @@ namespace CourseProject.Web.Shared.Models
         /// <summary>
         /// Rating kinopoisk.
         /// </summary>
-        [Required]
-        public string RatingKinopoisk { get; set; }
+        //[Required]
+        //public string RatingKinopoisk { get; set; }
 
         /// <summary>
         /// Rating site.
@@ -38,8 +38,8 @@ namespace CourseProject.Web.Shared.Models
         /// <summary>
         /// Rating Imdb.
         /// </summary>
-        [Required]
-        public string RatingImdb { get; set; }
+        //[Required]
+        //public string RatingImdb { get; set; }
 
         /// <summary>
         /// Release date.

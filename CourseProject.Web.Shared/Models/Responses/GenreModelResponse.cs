@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace CourseProject.Mvc2.Models
+namespace CourseProject.Web.Shared.Models.Responses
 {
-    public class Genre
+    public class GenreModelResponse
     {
         /// <summary>
         /// Identification.
         /// </summary>
         public int Id { get; set; }
-
         /// <summary>
         /// Genre.
         /// </summary>
-        public string GenreName { get; set; }
+        public string Genres { get; set; }
     }
 }

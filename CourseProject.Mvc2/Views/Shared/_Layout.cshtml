@@ -48,21 +48,23 @@
                     <a asp-controller="Account" asp-action="Login" class="registration__user button__use">Вход</a>
                     <a asp-controller="Account" asp-action="Register" class="registration__user button__use">Регистрация</a>
                 }
+                @if (User.IsInRole("Admin"))
+                {
+            <a asp-controller="Film" asp-action="AddFilms" class="registration__user button__use">Добавить фильм</a>
+                }
 
 
             </div>
-
             <div class="search__films">
                 <a href="" class="extended__search">Расширенный поиск</a>
-                <div class="search__button">
-                    <input type="text" class="search" placeholder="В чем дело Док?">
-                    <button class="button__search">
-                        <svg class="svg__search" width="17" height="17" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.7071 14.2929L22.7071 22.2929M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke-width="2" />
-                        </svg>
-
-                    </button>
-                </div>
+                    <form asp-controller="Home" asp-action="Search" method="get" class="search__button">
+                        <input name="name" type="text" class="search" placeholder="В чем дело, Док?">
+                        <button type="submit" class="button__search">
+                            <svg class="svg__search" width="17" height="17" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.7071 14.2929L22.7071 22.2929M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke-width="2" />
+                            </svg>
+                        </button>
+                    </form>
             </div>
         </div>
     </div>
@@ -70,54 +72,15 @@
     <!-- New films -->
     <div class="container">
         <div class="new__films">
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
-
-            <a href="" class="film__link">
-                <div class="block__films">
-                    <img src="~/img/orig 1.png" class="poster__film" alt="">
-                    <div class="name__film">Охотники за привидениями: Наследники</div>
-                </div>
-            </a>
+            @foreach (var item in ViewBag.Films)
+            {
+                <a asp-action="Index" asp-controller="Film" asp-route-id="@item.Id" class="film__link">
+                    <div class="block__films">
+                        <img src="@Url.Content(item.PathPoster)" class="poster__film" alt="">
+                        <div class="name__film">@item.NameFilms</div>
+                    </div>
+                </a>
+            }
         </div>
     </div>
 
@@ -130,6 +93,20 @@
                 <div class="block__menu">
                     <div class="menu__name">
                         <div class="menu__text">Жанры</div>
+                    </div>
+
+                    <div class="all_genres">
+                        @foreach (var item in ViewBag.Genres)
+                        {
+                            
+                            <div class="genre__block-link">
+                                <a asp-action="Genre" asp-controller="Film" asp-route-id="@item.Id" class="genre__link">
+                                    <div class="name__genre">@item.Genres</div>
+                                </a>
+                            </div>
+
+                            
+                        }
                     </div>
                 </div>
             </div>

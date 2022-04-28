@@ -1,9 +1,7 @@
 ﻿using Course_Project.Logic.Models;
+using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Course_Project.Logic.Interfaces
@@ -31,6 +29,20 @@ namespace Course_Project.Logic.Interfaces
         Task<FilmModelResponse> GetByIdAsync(int id);
 
         /// <summary>
+        /// Get film by name.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <returns>Film data transfer object.</returns>
+        Task<FilmShortModelResponse> GetByNameAsync(string nameSearch);
+
+        /// <summary>
+        /// Get all films by genre.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <returns>Film data transfer object.</returns>
+        Task<IEnumerable<FilmDto>> GetByGenreAsync(int idGenre);
+
+        /// <summary>
         /// Update film by identifier.
         /// </summary>
         /// <param name="model">film data transfer object.</param>
@@ -43,9 +55,9 @@ namespace Course_Project.Logic.Interfaces
         Task DeleteAsync(int id);
 
         /// <summary>
-        /// Get all Film.
+        /// Get all short information Film.
         /// </summary>
         /// <returns>Film data transfer objects.</returns>
-        Task<IEnumerable<FilmDto>> GetAllAsync();
+        Task<IEnumerable<FilmDto>> GetAllShortAsync();
     }
 }

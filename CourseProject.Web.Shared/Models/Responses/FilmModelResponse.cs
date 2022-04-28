@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Course_Project.Data.Models;
 using System.Collections.Generic;
 
 namespace CourseProject.Web.Shared.Models.Responses
@@ -40,37 +40,37 @@ namespace CourseProject.Web.Shared.Models.Responses
         /// <summary>
         /// Actor.
         /// </summary>
-        public IList<string> Country { get; set; }
-
-        /// <summary>
-        /// Actor.
-        /// </summary>
-        public IList<string> FirstName { get; set; }
-
-        /// <summary>
-        /// Actor.
-        /// </summary>
-        public IList<string> LastName { get; set; }
-
-        /// <summary>
-        /// Actor.
-        /// </summary>
-        public IList<string> SecondName { get; set; }
-
-        /// <summary>
-        /// Path to file.
-        /// </summary>
-        public string PhotoPath { get; set; }
+        public List<string> Country { get; set; }
 
         /// <summary>
         /// Genre.
         /// </summary>
-        public IList<string> Genre { get; set; }
+        public List<string> Genre { get; set; }
 
         /// <summary>
         /// Stage manager.
         /// </summary>
-        public IList<string> StageManagers { get; set; }
+        public List<string> StageManagers { get; set; }
+
+        /// <summary>
+        /// Actors.
+        /// </summary>
+        public List<Actor> Actors { get; set; }
+
+        ///// <summary>
+        ///// Actor first name.
+        ///// </summary>
+        //public List<string> FirstName { get; set; }
+
+        ///// <summary>
+        ///// Actor last name.
+        ///// </summary>
+        //public List<string> LastName { get; set; }
+
+        ///// <summary>
+        ///// Actor second name.
+        ///// </summary>
+        //public List<string> SecondName { get; set; }
 
         /// <summary>
         /// Description.

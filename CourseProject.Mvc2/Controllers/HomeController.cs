@@ -1,37 +1,45 @@
-﻿using CourseProject.Mvc2.Models;
-using CourseProject.Web.Shared.Models;
+﻿using CourseProject.Mvc2.Interfaces;
+using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationContext _context;
+        private readonly IFilmService _filmService;
 
-        public HomeController(ApplicationContext context/*, ILogger<HomeController> logger*/)
+        public HomeController(IFilmService filmService)
         {
-            //_logger = logger;
-            _context = context;
+            _filmService = filmService ?? throw new ArgumentNullException(nameof(filmService));
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Films.ToListAsync());
+            var result = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = result;
+            return View(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string name)
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection;
+            var result = await _filmService.GetByNameAsync(name);
+
+            return View(result);
         }
 
         public IActionResult Registration()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

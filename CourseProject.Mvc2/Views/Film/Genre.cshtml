@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<FilmShortModelResponse>
+@{
+    ViewData["Title"] = ViewBag.Genre;
+}
 
 <main class="main__films" role="main">
     @foreach (var film in Model)
