@@ -1,5 +1,6 @@
 ﻿using Course_Project.Data.Models;
 using Course_Project.Logic.Interfaces;
+using CourseProject.Web.Shared.Models.Responses;
 using CourseProject.WebApi3.Contracts.Requests;
 using CourseProject.WebApi3.Contracts.Responses;
 using CourseProject.WebApi3.Settings;
@@ -103,55 +104,26 @@ namespace CourseProject.WebApi3.Controllers
             return Ok();
         }
 
-        //[HttpPost("registration")]
-        //public async Task<IActionResult> RegistrationAsync(UserRegistationRequest model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User user = new() { Email = model.Email, UserName = model.UserName };
-        //        var result = await _userManager.CreateAsync(user, model.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            await _signInManager.SignInAsync(user, false);
-        //            //await _userManager.AddToRoleAsync(user, "User");
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(new ErrorResponse<string>
-        //            {
-        //                Message = "Can't registration new user.",
-        //                Errors = result.Errors.Select(error => error.Description)
-        //            });
-        //        }
-        //    }
-        //    return Ok(model);
-        //}
+        [HttpGet("userProfile")]
+        public async Task<IActionResult> ProfileAsync([FromBody]string userName)
+        {
+            User user = await _userManager.FindByNameAsync(userName);
 
-        //[HttpPost("login")]
-        //public async Task<IActionResult> LoginAsync(UserLoginRequest model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-        //        if (!result.Succeeded)
-        //        {
-        //            return BadRequest(new { message = "Email or password is incorrect" });
-        //        }
-        //    }
+            if (user is null)
+            {
+                return NotFound(user);
+            }
+                ProfileUserResponse model = new()
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Favourite = user.Favourite,
+                    WatchLater = user.WatchLater
+                };
 
-        //    return Ok(model);
-        //}
-
-        //// DELETE api/<UserController>/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> DeleteAsync(string id)
-        //{
-        //    User user = await _userManager.FindByIdAsync(id);
-        //    if (user != null)
-        //    {
-        //        var result = await _userManager.DeleteAsync(user);
-        //    }
-        //    return Ok();
-        //}
+            return Ok(model);
+        }
+       
     }
 }

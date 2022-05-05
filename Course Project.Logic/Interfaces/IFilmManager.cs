@@ -2,6 +2,7 @@
 using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Course_Project.Logic.Interfaces
@@ -40,7 +41,7 @@ namespace Course_Project.Logic.Interfaces
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Film data transfer object.</returns>
-        Task<IEnumerable<FilmDto>> GetByGenreAsync(int idGenre);
+        Task<IEnumerable<FilmDto>> GetFilmByGenreAsync(int idGenre);
 
         /// <summary>
         /// Update film by identifier.

@@ -1,7 +1,10 @@
-﻿@model IEnumerable<FilmShortModelResponse>
+﻿@*@model IEnumerable<FilmShortModelResponse>*@
+@model IndexViewModel
+@using CourseProject.Mvc2.ViewModels
 
+@addTagHelper *, CourseProject.Mvc2
 <main class="main__films" role="main">
-    @foreach (var film in Model)
+    @foreach (var film in Model.FilmShortModelResponses)
     {
         <form asp-action="Index" asp-controller="Film" asp-route-id="@film.Id">
             <div class="post__films">
@@ -35,4 +38,5 @@
             </div>
         </form>
     }
+    <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
 </main>

@@ -1,4 +1,5 @@
 ﻿using Course_Project.Data.Models;
+using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,7 @@ namespace CourseProject.Mvc2.Interfaces
         /// Login.
         /// </summary>
         /// <param name="value">Object.</param>
-        /// <returns>Jwt token.</returns>
-        Task<(string token, IList<string> roles)> LoginAsync(object value);
+        Task<(IList<string> roles, string userName)> LoginAsync(object value);
 
         /// <summary>
         /// Register.
@@ -25,5 +25,11 @@ namespace CourseProject.Mvc2.Interfaces
         /// <param name="value">Object.</param>
         /// <returns>Jwt token.</returns>
         Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value);
+
+        /// <summary>
+        /// Get user profile by id.
+        /// </summary>
+        /// <returns>Profile user.</returns>
+        Task<ProfileUserResponse> GetProfileByNameAsync(string userId, string token);
     }
 }

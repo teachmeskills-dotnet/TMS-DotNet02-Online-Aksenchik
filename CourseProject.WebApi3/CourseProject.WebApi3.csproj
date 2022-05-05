@@ -19,8 +19,4 @@
     <ProjectReference Include="..\CourseProject.Web.Shared\CourseProject.Web.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Files\Posters\" />
-  </ItemGroup>
-
 </Project>

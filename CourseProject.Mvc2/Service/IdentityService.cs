@@ -1,6 +1,7 @@
 ﻿using Course_Project.Data.Models;
 using CourseProject.Mvc2.Interfaces;
 using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -22,7 +23,26 @@ namespace CourseProject.Mvc2.Service
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async Task<(string token, IList<string> roles)> LoginAsync(object value)
+        public async Task<ProfileUserResponse> GetProfileByNameAsync(string userName, string token)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/User/userProfile");
+            request.Content = new StringContent(JsonSerializer.Serialize(userName), Encoding.UTF8, "application/json");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var profile = await response.Content.ReadFromJsonAsync<ProfileUserResponse>();
+            return profile;
+        }
+
+        public async Task<(IList<string> roles, string userName)> LoginAsync(object value)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "api/user/login");
             request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
@@ -37,7 +57,8 @@ namespace CourseProject.Mvc2.Service
             }
 
             var record = await response.Content.ReadFromJsonAsync<UserAuthModel>();
-            return (record.Token, record.Roles);
+
+            return (record.Roles, record.UserName);
         }
 
         public async Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value)

@@ -148,7 +148,7 @@ namespace Course_Project.Logic.Managers
             return FilmDtos;
         }
 
-        public async Task<IEnumerable<FilmDto>> GetByGenreAsync(int idGenre)
+        public async Task<IEnumerable<FilmDto>> GetFilmByGenreAsync(int idGenre)
         {
             var filmGenreIds = await _filmGenreRepository.GetAll().Where(f => f.GenreId == idGenre).Select(f => f.FilmId).ToListAsync();
 

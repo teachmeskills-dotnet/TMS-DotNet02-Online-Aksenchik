@@ -119,11 +119,59 @@ namespace CourseProject.Mvc2.Service
                 throw new Exception(error["message"]);
             }
 
-            var films = await response.Content.ReadFromJsonAsync<List<GenreModelResponse>>();
-            return films;
+            var genres = await response.Content.ReadFromJsonAsync<List<GenreModelResponse>>();
+            return genres;
         }
 
-        public async Task<IEnumerable<FilmShortModelResponse>> GetByGenreIdAsync(int genreId)
+        public async Task<IEnumerable<CountryModelResponse>> GetAllCountryAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Country/allCountry");
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var countries = await response.Content.ReadFromJsonAsync<List<CountryModelResponse>>();
+            return countries;
+        }
+
+        public async Task<IEnumerable<ActorModelResponse>> GetAllActorAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Actor/allActor");
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var actors = await response.Content.ReadFromJsonAsync<List<ActorModelResponse>>();
+            return actors;
+        }
+
+        public async Task<IEnumerable<StageManagerModelResponse>> GetAllStageManagerAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/StageManager/allStageManager");
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var actors = await response.Content.ReadFromJsonAsync<List<StageManagerModelResponse>>();
+            return actors;
+        }
+
+        public async Task<IEnumerable<FilmShortModelResponse>> GetFilmByGenreIdAsync(int genreId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "/api/Film/genre");
             request.Content = new StringContent(JsonSerializer.Serialize(genreId), Encoding.UTF8, "application/json");

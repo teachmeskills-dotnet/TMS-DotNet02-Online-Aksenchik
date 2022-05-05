@@ -8,6 +8,7 @@ using CourseProject.Mvc2.Interfaces;
 using System.Security.Claims;
 using CourseProject.Web.Shared.Models.Request;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CourseProject.Mvc2.Controllers
 {
@@ -40,13 +41,20 @@ namespace CourseProject.Mvc2.Controllers
             var token = User.FindFirst(ClaimTypes.Name).Value;
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var countryCollection = await _filmService.GetAllCountryAsync();
+            var actorsCollection = await _filmService.GetAllActorAsync();
+            var stageManagersCollection = await _filmService.GetAllStageManagerAsync();
+            ViewBag.AddGenres = new SelectList(genreCollection, "Id", "Genres");
+            ViewBag.AddCountry = new SelectList(countryCollection, "Id", "Country");
+            ViewBag.AddManager = new SelectList(stageManagersCollection, "Id", "StageManagers");
+            ViewBag.AddActor = actorsCollection;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFilms(FilmCreateRequest model, IFormFile uploadedFile)
+        public async Task<IActionResult> AddFilms(FilmCreateRequest model, IFormFile uploadedFile) //Добавить вывод атеров в одном свойстве
         {
             model = model ?? throw new ArgumentNullException(nameof(model));
             var token = User.FindFirst(ClaimTypes.Name).Value;
@@ -101,7 +109,7 @@ namespace CourseProject.Mvc2.Controllers
         [HttpGet]
         public async Task<IActionResult> Genre(int id)
         {
-            var result = await _filmService.GetByGenreIdAsync(id);
+            var result = await _filmService.GetFilmByGenreIdAsync(id);
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
             foreach (var item in genreCollection)
