@@ -138,7 +138,7 @@ namespace CourseProject.WebApi.Controllers
         [HttpGet("genre")]
         public async Task<IActionResult> GetAllFilmsByGenre([FromBody] int genre) //Доделать вывод в mvc
         {
-            var film = await _filmManager.GetByGenreAsync(genre);
+            var film = await _filmManager.GetFilmByGenreAsync(genre);
             var result = new List<FilmShortModelResponse>();
             foreach (var item in film)
             {

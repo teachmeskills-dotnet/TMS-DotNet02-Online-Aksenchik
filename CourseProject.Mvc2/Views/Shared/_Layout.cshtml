@@ -37,7 +37,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="user__block">
-                        Hello, <a asp-controller="Account" asp-action="Profile" asp-route-username="@User.Identity.Name">@ViewBag.Email</a>
+                        Hello, <a asp-controller="Account" asp-action="Profile" asp-route-userName="@User.Identity.Name">@User.Identity.Name</a>
                         <form method="post" asp-controller="Account" asp-action="Logout">
                             <input class="registration__user button__use" type="submit" value="Выход" />
                         </form>

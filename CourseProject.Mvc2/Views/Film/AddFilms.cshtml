@@ -4,9 +4,6 @@
 }
 
 <div class="main__addFilm">
-    <div class="registration__block">
-        <a asp-controller="Film" asp-action="Create" class="button__use">Редактирование постов</a>
-    </div>
     <form asp-controller="Film" asp-action="AddFilms" method="post" enctype="multipart/form-data">
         <div class="registration__block">
             <label asp-for="NameFilms" class="mine__form">Название Фильма:</label>
@@ -39,26 +36,32 @@
         <div class="registration__block-list">
             <label asp-for="CountryIds" class="mine__form">Страны:</label>
             <div class="block-list list-country" id="id__country">
-                <div class="add__input-country mine__form add__input">Добавить страну</div>
+                <select asp-for="CountryIds" class="select__add" asp-items="ViewBag.AddCountry" multiple size="15">
+                </select>
             </div>
         </div>
         <div class="registration__block-list">
             <label asp-for="ActorIds" class="mine__form">Актеры:</label>
             <div class="block-list list-actor">
-                <div class="add__input-actor mine__form add__input">Добавить актера</div>
+                <select asp-for="ActorIds" class="select__add" multiple size="15">
+                    @foreach (var item in ViewBag.AddActor)
+                    {
+                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                    }
+                </select>
             </div>
         </div>
         <div class="registration__block-list">
             <label asp-for="GenreIds" class="mine__form">Жанры:</label>
             <div class="block-list list-genre">
-                <div class="add__input-genre mine__form add__input">Добавить жанр</div>
+                <select asp-for="GenreIds" class="select__add" asp-items="ViewBag.AddGenres" multiple size="15">
+                </select>
             </div>
         </div>
         <div class="registration__block-list">
             <label asp-for="StageManagerIds" class="mine__form">Режиссер:</label>
-            <div class="block-list list-manager">
-                <div class="add__input-manager mine__form add__input">Добавить Режиссера</div>
-            </div>
+            <select asp-for="StageManagerIds" class="select__add" asp-items="ViewBag.AddManager" multiple size="15">
+            </select>
         </div>
         <div class="registration__block">
             <label class="mine__form">Постер:</label>
@@ -68,6 +71,26 @@
             <input type="submit" value="Добавить" class="mine__button" />
         </div>
     </form>
+
+        <div id="openModal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Название</h3>
+                        <a href="#close" title="Close" class="close">×</a>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="Film" asp-action="AddFilms" method="post">
+                            <label asp-for="GenreIds" for="country">Выберите жанр:</label>
+                            <select asp-for="GenreIds" class="select__add" asp-items="ViewBag.Companies" multiple size="15">
+                            </select>
+                            <input type="submit" value="Save" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </div>
 
 <script src="~/Script/AddInput.js"></script>

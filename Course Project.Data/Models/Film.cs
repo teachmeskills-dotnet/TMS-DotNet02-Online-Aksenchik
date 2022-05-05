@@ -70,6 +70,11 @@ namespace Course_Project.Data.Models
         public string RatingImdb { get; set; }
 
         /// <summary>
+        /// Link for file film.
+        /// </summary>
+        public string LinkFilmPlayer { get; set; }
+
+        /// <summary>
         /// Navigation property for FilmStageManager.
         /// </summary>
         public ICollection<FilmStageManager> FilmStageManagers { get; set; }

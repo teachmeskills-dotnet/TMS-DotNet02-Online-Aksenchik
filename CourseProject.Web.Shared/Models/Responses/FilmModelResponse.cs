@@ -5,6 +5,9 @@ namespace CourseProject.Web.Shared.Models.Responses
 {
     public class FilmModelResponse
     {
+        /// <summary>
+        /// Identification.
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

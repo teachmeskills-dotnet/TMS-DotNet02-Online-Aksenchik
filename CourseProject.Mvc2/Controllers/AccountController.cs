@@ -51,10 +51,11 @@ namespace CourseProject.Mvc2.Controllers
 
             if (ModelState.IsValid)
             {
-                var (token, roles) = await _identityService.LoginAsync(request);
+                var (roles, userName) = await _identityService.LoginAsync(request);
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, token),
+                    new Claim(ClaimTypes.Name, userName),
+                    new Claim(ClaimTypes.Email, userName)
                 };
 
                 foreach (var role in roles)
@@ -76,24 +77,29 @@ namespace CourseProject.Mvc2.Controllers
         }
 
         /// <summary>
-        /// Login (Get).
+        /// Register (Get).
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> RegisterAsync()
         {
-            var viewModel = new UserRegistationRequest();
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
-
-            return View(viewModel);
+            if (User.Identity.IsAuthenticated == false)
+            {
+                var viewModel = new UserRegistationRequest();
+                return View(viewModel);
+                
+            }
+            
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
-        /// Login (Post).
+        /// Register (Post).
         /// </summary>
-        /// <param name="request">User login request.</param>
+        /// <param name="request">User registation request.</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(UserRegistationRequest request)
@@ -120,107 +126,16 @@ namespace CourseProject.Mvc2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //[HttpGet]
-        //public IActionResult Register()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> Register(RegisterViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User user = new() { Email = model.Email, UserName = model.UserName};
-        //        // добавляем пользователя
-        //        var result = await _userManager.CreateAsync(user, model.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            // установка куки
-        //            await _signInManager.SignInAsync(user, false);
-        //            await _userManager.AddToRoleAsync(user, "Users");
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //        {
-        //            foreach (var error in result.Errors)
-        //            {
-        //                ModelState.AddModelError(string.Empty, error.Description);
-        //            }
-        //        }
-        //    }
-        //    return View(model);
-        //}
-
-        //[HttpGet]
-        //public IActionResult Login(string returnUrl = null)
-        //{
-        //    return View(new LoginViewModel { ReturnUrl = returnUrl });
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(LoginViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-        //        if (result.Succeeded)
-        //        {
-        //            // проверяем, принадлежит ли URL приложению
-        //            if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-        //            {
-        //                return Redirect(model.ReturnUrl);
-        //            }
-        //            else
-        //            {
-        //                return RedirectToAction("Index", "Home");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-        //        }
-        //    }
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> LoginAsync(LoginViewModel request)
-        //{
-        //    request = request ?? throw new ArgumentNullException(nameof(request));
-
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-        //    // UNDONE: ModelError
-
-        //    return View(request);
-        //}
-
-
-
-        //public async Task<IActionResult> Profile(string userName)
-        //{
-        //    User user = await _userManager.FindByNameAsync(userName);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        ProfileUserViewModel model = new()
-        //        {
-        //            Id = user.Id,
-        //            Email = user.Email,
-        //            UserName = user.UserName
-        //        };
-        //        return View(model);
-        //    }
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Profile(string userName)
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection;
+            var token = User.FindFirst(ClaimTypes.Name).Value;
+            var result = await _identityService.GetProfileByNameAsync(userName, token);
+            return View(result);
+        }
     }
 }

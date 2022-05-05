@@ -1,4 +1,4 @@
-﻿@model CourseProject.Mvc2.ViewModels.ProfileUserViewModel
+﻿@model ProfileUserResponse
 
 <form class="main__profile" asp-action="Profile" asp-controller="Account" asp-route-id="@Model.Id">
 
@@ -11,6 +11,18 @@
     <div class="profile__box">
         <div class="text__profile">Email:</div>
         <div class="text__profile">@Html.DisplayFor(model => model.Email)</div>
+    </div>
+    <div class="profile__border"></div>
+
+    <div class="profile__box">
+        <div class="text__profile">Избранное:</div>
+        <div class="text__profile">@Html.DisplayFor(model => model.Favourite)</div>
+    </div>
+    <div class="profile__border"></div>
+
+    <div class="profile__box">
+        <div class="text__profile">Смотреть позже:</div>
+        <div class="text__profile">@Html.DisplayFor(model => model.WatchLater)</div>
     </div>
     <div class="profile__border"></div>
 

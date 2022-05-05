@@ -35,6 +35,24 @@ namespace CourseProject.Mvc2.Interfaces
         Task<IEnumerable<GenreModelResponse>> GetAllGenreAsync();
 
         /// <summary>
+        /// Get all country.
+        /// </summary>
+        /// <returns>Country collection.</returns>
+        Task<IEnumerable<CountryModelResponse>> GetAllCountryAsync();
+
+        /// <summary>
+        /// Get all actor.
+        /// </summary>
+        /// <returns>Actor collection.</returns>
+        Task<IEnumerable<ActorModelResponse>> GetAllActorAsync();
+
+        /// <summary>
+        /// Get all stage manager.
+        /// </summary>
+        /// <returns>Stage manager collection.</returns>
+        Task<IEnumerable<StageManagerModelResponse>> GetAllStageManagerAsync();
+
+        /// <summary>
         /// Get all films.
         /// </summary>
         /// <param name="token">Jwt token.</param>
@@ -51,6 +69,6 @@ namespace CourseProject.Mvc2.Interfaces
         /// Get all films by genre id.
         /// </summary>
         /// <returns>Film collection.</returns>
-        Task<IEnumerable<FilmShortModelResponse>> GetByGenreIdAsync(int genreId);
+        Task<IEnumerable<FilmShortModelResponse>> GetFilmByGenreIdAsync(int genreId);
     }
 }
