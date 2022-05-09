@@ -2,9 +2,9 @@
 namespace Course_Project.Logic.Models
 {
     /// <summary>
-    /// Film Genre.
+    /// Rating.
     /// </summary>
-    public class FilmGenreDto
+    public class RatingDto
     {
         /// <summary>
         /// Identification.
@@ -12,13 +12,8 @@ namespace Course_Project.Logic.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Genre identification.
+        /// Rating.
         /// </summary>
-        public int GenreId { get; set; }
-
-        /// <summary>
-        /// Film identification.
-        /// </summary>
-        public int FilmId { get; set; }
+        public int Ratings { get; set; }
     }
 }

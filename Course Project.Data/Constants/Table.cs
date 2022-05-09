@@ -42,6 +42,16 @@ namespace Course_Project.Data.Constants
         public const string Genres = nameof(Genres);
 
         /// <summary>
+        /// FilmRating.
+        /// </summary>
+        public const string FilmRatings = nameof(FilmRatings);
+
+        /// <summary>
+        /// Rating.
+        /// </summary>
+        public const string Ratings = nameof(Ratings);
+
+        /// <summary>
         /// FilmRole.
         /// </summary>
         public const string FilmRoles = nameof(FilmRoles);

@@ -31,7 +31,7 @@ namespace CourseProject.Mvc2.TagHelp
             output.TagName = "div";
 
             // набор ссылок будет представлять список ul
-            TagBuilder tag = new TagBuilder("ul");
+            TagBuilder tag = new TagBuilder("div");
             tag.AddCssClass("pagination");
 
             // формируем три ссылки - на текущую, предыдущую и следующую
@@ -56,7 +56,7 @@ namespace CourseProject.Mvc2.TagHelp
 
         TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
         {
-            TagBuilder item = new TagBuilder("li");
+            TagBuilder item = new TagBuilder("button");
             TagBuilder link = new TagBuilder("a");
             if (pageNumber == this.PageModel.PageNumber)
             {
@@ -67,7 +67,7 @@ namespace CourseProject.Mvc2.TagHelp
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber });
             }
             item.AddCssClass("page-item");
-            link.AddCssClass("page-link");
+            link.AddCssClass("button__film-post");
             link.InnerHtml.Append(pageNumber.ToString());
             item.InnerHtml.AppendHtml(link);
             return item;

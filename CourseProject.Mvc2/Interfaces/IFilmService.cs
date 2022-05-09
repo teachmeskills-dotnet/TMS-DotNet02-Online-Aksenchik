@@ -53,11 +53,16 @@ namespace CourseProject.Mvc2.Interfaces
         Task<IEnumerable<StageManagerModelResponse>> GetAllStageManagerAsync();
 
         /// <summary>
-        /// Get all films.
+        /// Get film by id.
         /// </summary>
-        /// <param name="token">Jwt token.</param>
         /// <returns>Film collection.</returns>
-        Task<FilmModelResponse> GetByIdAsync(int id,string token);
+        Task<FilmModelResponse> GetByIdAsync(int id);
+
+        /// <summary>
+        /// Get random film by id.
+        /// </summary>
+        /// <returns>Film collection.</returns>
+        Task<FilmModelResponse> GetRandomFilmByIdAsync();
 
         /// <summary>
         /// Get all films by name.

@@ -20,6 +20,8 @@ namespace Course_Project.Logic.Managers
         private readonly IRepositoryManager<FilmCountry> _filmCountryRepository;
         private readonly IRepositoryManager<FilmGenre> _filmGenreRepository;
         private readonly IRepositoryManager<FilmStageManager> _filmStageManagerRepository;
+        private readonly IRepositoryManager<FilmRating> _filmRatingRepository;
+        private readonly IRepositoryManager<Rating> _ratingRepository;
         private readonly IRepositoryManager<State> _countryRepository;
         private readonly IRepositoryManager<Genre> _genreRepository;
         private readonly IRepositoryManager<StageManager> _stageManagerRepository;
@@ -32,6 +34,8 @@ namespace Course_Project.Logic.Managers
                            IRepositoryManager<FilmCountry> filmCountryRepository,
                            IRepositoryManager<FilmGenre> filmGenreRepository,
                            IRepositoryManager<FilmStageManager> filmStageManagerRepository,
+                           IRepositoryManager<FilmRating> filmRatingRepository,
+                           IRepositoryManager<Rating> ratingRepository,
                            IRepositoryManager<State> countryRepository,
                            IRepositoryManager<Genre> genreRepository,
                            IRepositoryManager<StageManager> stageManagerRepository,
@@ -46,6 +50,9 @@ namespace Course_Project.Logic.Managers
             _genreRepository = genreRepository ?? throw new ArgumentNullException(nameof(genreRepository));
             _stageManagerRepository = stageManagerRepository ?? throw new ArgumentNullException(nameof(stageManagerRepository));
             _actorRepository = actorRepository ?? throw new ArgumentNullException(nameof(actorRepository));
+            _stageManagerRepository = stageManagerRepository ?? throw new ArgumentNullException(nameof(stageManagerRepository));
+            _filmRatingRepository = filmRatingRepository ?? throw new ArgumentNullException(nameof(filmRatingRepository));
+            _ratingRepository = ratingRepository ?? throw new ArgumentNullException(nameof(ratingRepository));
         }
 
         public async Task CreateAsync(FilmDto filmDto, 
@@ -64,9 +71,11 @@ namespace Course_Project.Logic.Managers
                 PathPoster = filmDto.PathPoster,
                 ImageName = filmDto.ImageName,
                 IdRating = filmDto.IdRating,
-                RatingSite = filmDto.RatingSite,
+                RatingSite = "0",
                 RatingKinopoisk = filmDto.RatingKinopoisk,
                 RatingImdb = filmDto.RatingImdb,
+                LinkFilmtrailer = filmDto.LinkFilmtrailer,
+                LinkFilmPlayer = filmDto.LinkFilmPlayer
             };
 
             await _filmRepository.CreateAsync(film);
@@ -137,12 +146,14 @@ namespace Course_Project.Logic.Managers
 
             foreach (var item in films)
             {
+                var rating = await GetTotalScoreFilm(item.Id);
                 FilmDtos.Add(new FilmDto
                 {
                     Id = item.Id,
                     NameFilms = item.NameFilms,
                     ReleaseDate = item.ReleaseDate,
-                    PathPoster = item.PathPoster
+                    PathPoster = item.PathPoster,
+                    RatingSite = rating
                 });
             }
             return FilmDtos;
@@ -192,6 +203,8 @@ namespace Course_Project.Logic.Managers
                 LastName = a.LastName,
             }).ToListAsync();
 
+            var rating = await GetTotalScoreFilm(film.Id);
+
             FilmModelResponse model = new()
             {
                 Id = film.Id,
@@ -200,8 +213,10 @@ namespace Course_Project.Logic.Managers
                 PathPoster = film.PathPoster,
                 ReleaseDate = film.ReleaseDate,
                 RatingKinopoisk = film.RatingKinopoisk,
+                LinkFilmtrailer = film.LinkFilmtrailer,
+                LinkFilmPlayer = film.LinkFilmPlayer,
                 RatingImdb = film.RatingImdb,
-                RatingSite = film.RatingSite,
+                RatingSite = rating,
                 AgeLimit = film.AgeLimit,
                 Time = film.Time,
                 Description = film.Description,
@@ -249,6 +264,48 @@ namespace Course_Project.Logic.Managers
             {
                 filmUpdate.NameFilms = model.NameFilms;
             }
+        }
+
+        public async Task<int> GetRandomFilmAsync()
+        {
+            var film = await _filmRepository.GetAll().ToListAsync();
+            Random random = new();
+            var getCountRandom = random.Next(0, film.Count);
+            var randomFilm = film.ElementAtOrDefault(getCountRandom);
+            return randomFilm.Id;
+        }
+
+        public async Task AddScoreFilmAsync(int idFilm, int score)
+        {
+            Rating rating = new()
+            {
+                Ratings = score
+            };
+
+            await _ratingRepository.CreateAsync(rating);
+            await _ratingRepository.SaveChangesAsync();
+
+            FilmRating filmRating = new()
+                {
+                    FilmId = idFilm,
+                    RatingId = rating.Id
+            };
+            await _filmRatingRepository.CreateAsync(filmRating);
+            await _filmRatingRepository.SaveChangesAsync();
+        }
+
+        public async Task<float> GetTotalScoreFilm(int idFilm)
+        {
+            var filmRatingIds = await _filmRatingRepository.GetAll().Where(r => r.FilmId == idFilm).Select(r => r.RatingId).ToListAsync();
+            var ratings = await _ratingRepository.GetAll().Where(c => filmRatingIds.Contains(c.Id)).Select(c => c.Ratings).ToListAsync();
+            float totalNull = 0f;
+            if (ratings.Count == 0)
+            {
+                return totalNull;
+            }
+            float total = (float)ratings.Sum() / (float)ratings.Count();
+
+            return total;
         }
     }
 }

@@ -24,6 +24,22 @@ namespace Course_Project.Logic.Managers
 
         public async Task CreateAsync(GenreDto genreDto)
         {
+            var genres = await _genreRepository
+               .GetAll()
+               .Select(g => new Genre
+               {
+                   Id = g.Id,
+                   Genres = g.Genres
+               }).ToListAsync();
+
+            foreach (var item in genres)
+            {
+                if (genreDto.Genres == item.Genres)
+                {
+                    throw new NotFoundException($"'{item.Genres}' already in the database.");
+                }
+            }
+
             var genre = new Genre()
             {
                 Genres = genreDto.Genres

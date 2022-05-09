@@ -75,6 +75,11 @@ namespace Course_Project.Data.Models
         public string LinkFilmPlayer { get; set; }
 
         /// <summary>
+        /// Link for trailer.
+        /// </summary>
+        public string LinkFilmtrailer { get; set; }
+
+        /// <summary>
         /// Navigation property for FilmStageManager.
         /// </summary>
         public ICollection<FilmStageManager> FilmStageManagers { get; set; }
@@ -83,6 +88,11 @@ namespace Course_Project.Data.Models
         /// Navigation property for FilmActors.
         /// </summary>
         public ICollection<FilmActor> FilmActors { get; set; }
+
+        /// <summary>
+        /// Navigation property for FilmRatings.
+        /// </summary>
+        public ICollection<FilmRating> FilmRatings { get; set; }
 
         /// <summary>
         /// Navigation property for UserFilms.

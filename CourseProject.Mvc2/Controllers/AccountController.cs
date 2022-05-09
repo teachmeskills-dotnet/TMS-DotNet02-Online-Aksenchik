@@ -33,6 +33,9 @@ namespace CourseProject.Mvc2.Controllers
             var viewModel = new UserLoginRequest();
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
 
@@ -84,6 +87,9 @@ namespace CourseProject.Mvc2.Controllers
         {
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             if (User.Identity.IsAuthenticated == false)
@@ -131,6 +137,9 @@ namespace CourseProject.Mvc2.Controllers
         {
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             var token = User.FindFirst(ClaimTypes.Name).Value;

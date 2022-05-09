@@ -68,7 +68,9 @@ namespace CourseProject.WebApi.Controllers
                 IdRating = request.IdRating,
                 RatingImdb = ImdbData,
                 RatingKinopoisk = kinopoiskData,
-                RatingSite = request.RatingSite
+                RatingSite = request.RatingSite,
+                LinkFilmtrailer = request.LinkFilmtrailer,
+                LinkFilmPlayer = request.LinkFilmPlayer
             };
 
             foreach (var item in request.ActorIds)
@@ -159,6 +161,34 @@ namespace CourseProject.WebApi.Controllers
             var film = await _filmManager.GetAllShortAsync();
 
             return Ok(film);
+        }
+
+        [HttpGet("randomFilmId")]
+        public async Task<IActionResult> GetRandomFilmId()
+        {
+            var filmId = await _filmManager.GetRandomFilmAsync();
+            var film = await _filmManager.GetByIdAsync(filmId);
+
+            return Ok(film);
+        }
+
+        [HttpPost("rating")]
+        public async Task<IActionResult> AddRatingAsync(int filmId, int score)
+        {
+            RatingCreateRequest request = new()
+            {
+                FilmId = filmId,
+                Rating = score
+            };
+            await _filmManager.AddScoreFilmAsync(filmId, score);
+            return Ok();
+        }
+
+        [HttpGet("Totalrating")]
+        public async Task<IActionResult> TotalRatingAsync(int filmId) //Доделать рейтинг
+        {
+            var result = await _filmManager.GetTotalScoreFilm(filmId);
+            return Ok(result);
         }
 
         // DELETE api/<FilmController>/5

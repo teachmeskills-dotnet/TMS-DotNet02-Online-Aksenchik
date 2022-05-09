@@ -3,7 +3,7 @@
     ViewBag.Title = @Html.DisplayFor(model => model.NameFilms);
 }
 
-<form class="main__view-film" asp-action="Index" asp-controller="Film" asp-route-id="@Model.Id">
+<main class="main__view-film">
     <div class="film__info">
         <div class="film__poster">
             <img src="@Html.DisplayFor(model => model.PathPoster)" class="view__poster" alt="">
@@ -83,19 +83,9 @@
     </div>
     <div class="film__play">
         <div class="media__use">
-            <div class="favourites">
-                <div class="media__text">Добавить</div>
-                <svg class="svg__favourite" width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 14L0 23V0H17V23L8 14Z" />
-                </svg>
-            </div>
-
-            <div class="watch__later">
-                <div class="media__text">Смотреть позже</div>
-            </div>
-            <div class="film__trailer">
-                <div class="media__text">Трейлер</div>
-            </div>
+            <a href="#"><div class="button__film-post">Избранное</div></a>
+            <a href="#"><div class="button__film-post">Смотреть позже</div></a>
+            <a href="#openModal"><div class="button__film-post">Трейлер</div></a>
         </div>
         <div>
             <img class="media__player" src="~/img/play.png" alt="">
@@ -104,21 +94,51 @@
     <div class="film__recommend">
         <div class="description">Мы рекомендуем:</div>
         <div class="recommend">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
-            <img class="recommend__film" src="~/img/poster.png" alt="">
+            @foreach (var item in ViewBag.Recommended)
+            {
+                <a asp-action="Index" asp-controller="Film" asp-route-id="@item.Id" class="film__link">
+                    <div class="best__films">
+                        <img src="@Url.Content(item.PathPoster)" class="recommend__film" alt="">
+                        <div class="name__film">@item.NameFilms</div>
+                    </div>
+                </a>
+            }
         </div>
     </div>
     <div class="film__comments">
         <div class="description">Добавить комментарий:</div>
-        <div class="add__comments">
-            <textarea class="textarea__comments" name="text" placeholder="Текст сообщения"></textarea>
-            <button class="post__comments">Отправвить</button>
-        </div>
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://filmlogo.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
     </div>
-</form>
+    <div id="openModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@Html.DisplayFor(model => model.NameFilms)</h3>
+                    <a href="#close" title="Close" class="close">×</a>
+                </div>
+                <div class="modal-body">
+                    <iframe width="560" height="315" src="@Url.Content(Model.LinkFilmtrailer)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
