@@ -28,7 +28,7 @@ namespace CourseProject.Web.Shared.Models.Responses
         /// <summary>
         /// Rating site.
         /// </summary>
-        public string RatingSite { get; set; }
+        public float RatingSite { get; set; }
 
         /// <summary>
         /// Rating Imdb.
@@ -39,6 +39,16 @@ namespace CourseProject.Web.Shared.Models.Responses
         /// Release date.
         /// </summary>
         public int ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Link for file film.
+        /// </summary>
+        public string LinkFilmPlayer { get; set; }
+
+        /// <summary>
+        /// Link for trailer.
+        /// </summary>
+        public string LinkFilmtrailer { get; set; }
 
         /// <summary>
         /// Actor.

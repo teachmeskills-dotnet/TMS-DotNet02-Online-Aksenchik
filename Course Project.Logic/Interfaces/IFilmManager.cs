@@ -60,5 +60,23 @@ namespace Course_Project.Logic.Interfaces
         /// </summary>
         /// <returns>Film data transfer objects.</returns>
         Task<IEnumerable<FilmDto>> GetAllShortAsync();
+
+        /// <summary>
+        /// Get all short information Film.
+        /// </summary>
+        /// <returns>Film data transfer objects.</returns>
+        Task AddScoreFilmAsync(int idFilm, int score);
+
+        /// <summary>
+        /// Get random Film.
+        /// </summary>
+        /// <returns>Film data transfer objects.</returns>
+        Task<int> GetRandomFilmAsync();
+
+        /// <summary>
+        /// Get total score film.
+        /// </summary>
+        /// <returns>Float result.</returns>
+        Task<float> GetTotalScoreFilm(int idFilm);
     }
 }

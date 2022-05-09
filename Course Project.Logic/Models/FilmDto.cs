@@ -53,7 +53,7 @@ namespace Course_Project.Logic.Models
         /// <summary>
         /// Rating site.
         /// </summary>
-        public string RatingSite { get; set; }
+        public float RatingSite { get; set; }
 
         /// <summary>
         /// Rating kinopoisk.
@@ -64,5 +64,15 @@ namespace Course_Project.Logic.Models
         /// Rating imdb.
         /// </summary>
         public string RatingImdb { get; set; }
+
+        /// <summary>
+        /// Link for file film.
+        /// </summary>
+        public string LinkFilmPlayer { get; set; }
+
+        /// <summary>
+        /// Link for trailer.
+        /// </summary>
+        public string LinkFilmtrailer { get; set; }
     }
 }

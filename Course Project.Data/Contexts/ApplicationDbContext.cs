@@ -57,6 +57,16 @@ namespace Course_Project.Data.Contexts
         public DbSet<StageManager> StageManagers { get; set; }
 
         /// <summary>
+        /// DbSet for FilmRatings.
+        /// </summary>
+        public DbSet<FilmRating> FilmRatings { get; set; }
+
+        /// <summary>
+        /// DbSet for StageManagers.
+        /// </summary>
+        public DbSet<Rating> Ratings { get; set; }
+
+        /// <summary>
         /// DbSet for UserFilms.
         /// </summary>
         public DbSet<UserFilm> UserFilms { get; set; }
@@ -81,6 +91,8 @@ namespace Course_Project.Data.Contexts
             builder.ApplyConfiguration(new FilmGenresConfiguration());
             builder.ApplyConfiguration(new FilmRolesConfiguration());
             builder.ApplyConfiguration(new FilmStageManagersConfiguration());
+            builder.ApplyConfiguration(new FilmRatingsConfiguration());
+            builder.ApplyConfiguration(new RatingsConfiguration());
             builder.ApplyConfiguration(new GenresConfiguration());
             builder.ApplyConfiguration(new StageManagersConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());

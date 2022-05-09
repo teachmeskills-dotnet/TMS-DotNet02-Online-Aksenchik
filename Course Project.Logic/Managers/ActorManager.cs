@@ -24,6 +24,23 @@ namespace Course_Project.Logic.Managers
 
         public async Task CreateAsync(ActorDto actorDto)
         {
+            var actors = await _actorRepository
+               .GetAll()
+               .Select(a => new Actor
+               {
+                   Id = a.Id,
+                   FirstName = a.FirstName,
+                   LastName = a.LastName,
+                   SecondName = a.SecondName
+               }).ToListAsync();
+            foreach (var item in actors)
+            {
+                if (actorDto.FirstName == item.FirstName && actorDto.LastName == item.LastName && actorDto.SecondName == item.SecondName)
+                {
+                    throw new NotFoundException($"'{item.FirstName} {item.LastName}' already in the database.");
+                }
+            }
+            
             var actor = new Actor()
             {
                 FirstName = actorDto.FirstName,

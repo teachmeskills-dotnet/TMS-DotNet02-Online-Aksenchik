@@ -76,10 +76,9 @@ namespace CourseProject.Mvc2.Service
             return films;
         }
 
-        public async Task<FilmModelResponse> GetByIdAsync(int id,string token)
+        public async Task<FilmModelResponse> GetByIdAsync(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/api/Film/{id}");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             using var response = await _httpClient.SendAsync(request);
 
@@ -186,6 +185,23 @@ namespace CourseProject.Mvc2.Service
 
             var films = await response.Content.ReadFromJsonAsync<List<FilmShortModelResponse>>();
             return films;
+        }
+
+        public async Task<FilmModelResponse> GetRandomFilmByIdAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/Film/randomFilmId");
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var film = await response.Content.ReadFromJsonAsync<FilmModelResponse>();
+            return film;
         }
     }
 }

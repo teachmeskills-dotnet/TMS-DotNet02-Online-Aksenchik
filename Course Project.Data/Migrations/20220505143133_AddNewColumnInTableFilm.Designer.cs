@@ -4,14 +4,16 @@ using Course_Project.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Course_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220505143133_AddNewColumnInTableFilm")]
+    partial class AddNewColumnInTableFilm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,30 +180,6 @@ namespace Course_Project.Data.Migrations
                     b.ToTable("FilmGenres", "Film");
                 });
 
-            modelBuilder.Entity("Course_Project.Data.Models.FilmRating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("FilmId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RatingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilmId");
-
-                    b.HasIndex("RatingId");
-
-                    b.ToTable("FilmRatings", "Film");
-                });
-
             modelBuilder.Entity("Course_Project.Data.Models.FilmStageManager", b =>
                 {
                     b.Property<int>("Id")
@@ -243,23 +221,6 @@ namespace Course_Project.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres", "Film");
-                });
-
-            modelBuilder.Entity("Course_Project.Data.Models.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Ratings")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ratings", "Film");
                 });
 
             modelBuilder.Entity("Course_Project.Data.Models.StageManager", b =>
@@ -581,25 +542,6 @@ namespace Course_Project.Data.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("Course_Project.Data.Models.FilmRating", b =>
-                {
-                    b.HasOne("Course_Project.Data.Models.Film", "Film")
-                        .WithMany("FilmRatings")
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Course_Project.Data.Models.Rating", "Rating")
-                        .WithMany("FilmRatings")
-                        .HasForeignKey("RatingId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Film");
-
-                    b.Navigation("Rating");
-                });
-
             modelBuilder.Entity("Course_Project.Data.Models.FilmStageManager", b =>
                 {
                     b.HasOne("Course_Project.Data.Models.Film", "Film")
@@ -701,8 +643,6 @@ namespace Course_Project.Data.Migrations
 
                     b.Navigation("FilmGenres");
 
-                    b.Navigation("FilmRatings");
-
                     b.Navigation("FilmStageManagers");
 
                     b.Navigation("UserFilms");
@@ -711,11 +651,6 @@ namespace Course_Project.Data.Migrations
             modelBuilder.Entity("Course_Project.Data.Models.Genre", b =>
                 {
                     b.Navigation("FilmGenres");
-                });
-
-            modelBuilder.Entity("Course_Project.Data.Models.Rating", b =>
-                {
-                    b.Navigation("FilmRatings");
                 });
 
             modelBuilder.Entity("Course_Project.Data.Models.StageManager", b =>

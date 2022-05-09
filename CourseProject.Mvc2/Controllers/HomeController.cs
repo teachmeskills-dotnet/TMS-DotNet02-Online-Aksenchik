@@ -32,8 +32,11 @@ namespace CourseProject.Mvc2.Controllers
                 PageViewModel = pageViewModel,
                 FilmShortModelResponses = items
             };
-            
+
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = result;
             return View(viewModel);
@@ -44,16 +47,14 @@ namespace CourseProject.Mvc2.Controllers
         {
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             var result = await _filmService.GetByNameAsync(name);
 
             return View(result);
-        }
-
-        public IActionResult Registration()
-        {
-            return View();
         }
     }
 }

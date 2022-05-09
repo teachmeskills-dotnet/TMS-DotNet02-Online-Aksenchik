@@ -24,6 +24,22 @@ namespace Course_Project.Logic.Managers
 
         public async Task CreateAsync(StateDto stateDto)
         {
+            var countries = await _countryRepository
+               .GetAll()
+               .Select(c => new State
+               {
+                   Id = c.Id,
+                   Country = c.Country
+               }).ToListAsync();
+
+            foreach (var item in countries)
+            {
+                if (stateDto.Country == item.Country)
+                {
+                    throw new NotFoundException($"'{item.Country}' already in the database.");
+                }
+            }
+
             var state = new State()
             {
                 Country = stateDto.Country

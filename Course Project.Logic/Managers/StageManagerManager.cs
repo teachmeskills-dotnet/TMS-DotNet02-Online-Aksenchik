@@ -25,6 +25,22 @@ namespace Course_Project.Logic.Managers
 
         public async Task CreateAsync(StageManagerDto stageManagerDto)
         {
+            var stageManagers = await _stageManagerRepository
+                .GetAll()
+                .Select(m => new StageManager
+                {
+                    Id = m.Id,
+                    StageManagers = m.StageManagers
+                }).ToListAsync();
+
+            foreach (var item in stageManagers)
+            {
+                if (stageManagerDto.StageManagers == item.StageManagers)
+                {
+                    throw new NotFoundException($"'{item.StageManagers}' already in the database.");
+                }
+            }
+
             var stageManager = new StageManager()
             {
                 StageManagers = stageManagerDto.StageManagers
@@ -38,7 +54,7 @@ namespace Course_Project.Logic.Managers
         {
             var stageManagerDtos = new List<StageManagerDto>();
 
-            var stageManager = await _stageManagerRepository
+            var stageManagers = await _stageManagerRepository
                 .GetAll()
                 .Select(m => new StageManager
                 {
@@ -46,7 +62,7 @@ namespace Course_Project.Logic.Managers
                     StageManagers = m.StageManagers
                 }).ToListAsync();
 
-            foreach (var item in stageManager)
+            foreach (var item in stageManagers)
             {
                 stageManagerDtos.Add(new StageManagerDto
                 {

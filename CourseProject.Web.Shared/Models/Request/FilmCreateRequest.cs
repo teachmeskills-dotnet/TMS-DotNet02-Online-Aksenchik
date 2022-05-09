@@ -24,28 +24,27 @@ namespace CourseProject.Web.Shared.Models.Request
         public int IdRating { get; set; }
 
         /// <summary>
-        /// Rating kinopoisk.
-        /// </summary>
-        //[Required]
-        //public string RatingKinopoisk { get; set; }
-
-        /// <summary>
         /// Rating site.
         /// </summary>
         [Required]
-        public string RatingSite { get; set; }
-
-        /// <summary>
-        /// Rating Imdb.
-        /// </summary>
-        //[Required]
-        //public string RatingImdb { get; set; }
+        public float RatingSite { get; set; }
 
         /// <summary>
         /// Release date.
         /// </summary>
         [Required]
         public int ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Link for file film.
+        /// </summary>
+        public string LinkFilmPlayer { get; set; }
+
+        /// <summary>
+        /// Link for trailer.
+        /// </summary>
+        [Required]
+        public string LinkFilmtrailer { get; set; }
 
         /// <summary>
         /// Country identification.

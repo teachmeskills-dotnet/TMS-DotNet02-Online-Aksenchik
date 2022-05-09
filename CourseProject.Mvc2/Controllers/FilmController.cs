@@ -9,6 +9,7 @@ using System.Security.Claims;
 using CourseProject.Web.Shared.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace CourseProject.Mvc2.Controllers
 {
@@ -25,15 +26,28 @@ namespace CourseProject.Mvc2.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            var token = User.FindFirst(ClaimTypes.Name).Value;
-            var result = await _filmService.GetByIdAsync(id, token);
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
+            ViewBag.RandomFilm = resultRandomFilm.Id;
+            ViewBag.Recommended = filmCollection.Take(6);
 
+
+            var result = await _filmService.GetByIdAsync(id);
             return View(result);
+            
+            
+            
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Random()
+        //{
+           
+        //    return View(result);
+        //}
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddFilms()
@@ -44,6 +58,9 @@ namespace CourseProject.Mvc2.Controllers
             var countryCollection = await _filmService.GetAllCountryAsync();
             var actorsCollection = await _filmService.GetAllActorAsync();
             var stageManagersCollection = await _filmService.GetAllStageManagerAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.AddGenres = new SelectList(genreCollection, "Id", "Genres");
             ViewBag.AddCountry = new SelectList(countryCollection, "Id", "Country");
             ViewBag.AddManager = new SelectList(stageManagersCollection, "Id", "StageManagers");
@@ -75,6 +92,7 @@ namespace CourseProject.Mvc2.Controllers
                 Time = model.Time,
                 ReleaseDate = model.ReleaseDate,
                 Description = model.Description,
+                LinkFilmtrailer = model.LinkFilmtrailer,
                 IdRating = model.IdRating,
                 RatingSite = model.RatingSite,
                 CountryIds = model.CountryIds,
@@ -101,6 +119,9 @@ namespace CourseProject.Mvc2.Controllers
             await _filmService.AddCountryAsync(request, token);
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             return RedirectToAction("Index", "Home");
@@ -112,6 +133,9 @@ namespace CourseProject.Mvc2.Controllers
             var result = await _filmService.GetFilmByGenreIdAsync(id);
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            
             foreach (var item in genreCollection)
             {
                 if (item.Id == id)
@@ -119,6 +143,7 @@ namespace CourseProject.Mvc2.Controllers
                     ViewBag.Genre = item.Genres;
                 }
             }
+            ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             return View(result);
