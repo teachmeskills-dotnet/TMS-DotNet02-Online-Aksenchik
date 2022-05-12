@@ -25,8 +25,10 @@ namespace CourseProject.Mvc2.Service
 
         public async Task<ProfileUserResponse> GetProfileByNameAsync(string userName, string token)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/User/userProfile");
-            request.Content = new StringContent(JsonSerializer.Serialize(userName), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/User/userProfile")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(userName), Encoding.UTF8, "application/json")
+            };
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             using var response = await _httpClient.SendAsync(request);
@@ -44,8 +46,10 @@ namespace CourseProject.Mvc2.Service
 
         public async Task<(IList<string> roles, string userName)> LoginAsync(object value)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "api/user/login");
-            request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/user/login")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json")
+            };
 
             using var response = await _httpClient.SendAsync(request);
 
@@ -63,8 +67,10 @@ namespace CourseProject.Mvc2.Service
 
         public async Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "api/user/registration");
-            request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/user/registration")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json")
+            };
 
             using var response = await _httpClient.SendAsync(request);
 

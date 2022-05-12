@@ -1,5 +1,4 @@
-﻿using Course_Project.Data.Models;
-using CourseProject.Mvc2.Interfaces;
+﻿using CourseProject.Mvc2.Interfaces;
 using CourseProject.Web.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,17 +6,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
 {
+    /// <summary>
+    /// Account controller.
+    /// </summary>
     public class AccountController : Controller
     {
         public readonly IIdentityService _identityService;
         private readonly IFilmService _filmService;
 
+        /// <summary>
+        /// Constructor with params.
+        /// </summary>
+        /// <param name="filmService">Film Service.</param>
+        /// <param name="identityService">Identity Service.</param>
         public AccountController(IIdentityService identityService, IFilmService filmService)
         {
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
@@ -123,6 +129,9 @@ namespace CourseProject.Mvc2.Controllers
                 return View(request);
         }
 
+        /// <summary>
+        /// User logout(Post).
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -132,6 +141,10 @@ namespace CourseProject.Mvc2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// User profile view(Get).
+        /// </summary>
+        /// <param name="userName">User name.</param>
         [HttpGet]
         public async Task<IActionResult> Profile(string userName)
         {

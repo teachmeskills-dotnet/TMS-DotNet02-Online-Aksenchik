@@ -1,5 +1,4 @@
 ﻿using Course_Project.Logic.Models;
-using CourseProject.Web.Shared.Models;
 using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Create stageManager.
         /// </summary>
-        /// <param name="model">StageManager data transfer object.</param>
+        /// <param name="stageManagerDto">StageManager data transfer object.</param>
         Task CreateAsync(StageManagerDto stageManagerDto);
 
         /// <summary>
@@ -26,7 +25,7 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Update stageManager by identifier.
         /// </summary>
-        /// <param name="model">StageManager data transfer object.</param>
+        /// <param name="stageManagerDto">StageManager data transfer object.</param>
         Task UpdateAsync(StageManagerDto stageManagerDto);
 
         /// <summary>

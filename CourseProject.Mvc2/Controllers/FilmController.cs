@@ -13,17 +13,30 @@ using System.Linq;
 
 namespace CourseProject.Mvc2.Controllers
 {
+    /// <summary>
+    /// Film controller.
+    /// </summary>
     public class FilmController : Controller
     {
         public readonly IWebHostEnvironment _appEnvironment;
         private readonly IFilmService _filmService;
 
+        /// <summary>
+        /// Constructor with params.
+        /// </summary>
+        /// <param name="filmService">Film Service.</param>
+        /// <param name="appEnvironment">App Environment.</param>
         public FilmController(IWebHostEnvironment appEnvironment, IFilmService filmService)
         {
-            _appEnvironment = appEnvironment;
+            _appEnvironment = appEnvironment ?? throw new ArgumentNullException(nameof(appEnvironment));
             _filmService = filmService ?? throw new ArgumentNullException(nameof(filmService));
         }
 
+        /// <summary>
+        /// Index film view (Get).
+        /// </summary>
+        /// <param name="id">Id film.</param>
+        [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
             var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
@@ -37,22 +50,15 @@ namespace CourseProject.Mvc2.Controllers
 
             var result = await _filmService.GetByIdAsync(id);
             return View(result);
-            
-            
-            
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Random()
-        //{
-           
-        //    return View(result);
-        //}
-
+        /// <summary>
+        /// Add film view(Get).
+        /// </summary>
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> AddFilms()
         {
-            var token = User.FindFirst(ClaimTypes.Name).Value;
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
             var countryCollection = await _filmService.GetAllCountryAsync();
@@ -70,8 +76,13 @@ namespace CourseProject.Mvc2.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Add film(Post).
+        /// </summary>
+        /// <param name="model">Film Create Request.</param>
+        /// <param name="uploadedFile">Uploaded File.</param>
         [HttpPost]
-        public async Task<IActionResult> AddFilms(FilmCreateRequest model, IFormFile uploadedFile) //Добавить вывод атеров в одном свойстве
+        public async Task<IActionResult> AddFilms(FilmCreateRequest model, IFormFile uploadedFile)
         {
             model = model ?? throw new ArgumentNullException(nameof(model));
             var token = User.FindFirst(ClaimTypes.Name).Value;
@@ -105,28 +116,32 @@ namespace CourseProject.Mvc2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AddCount()
-        {
-            return View();
-        }
+        //public IActionResult AddCount()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> AddCount(CountryCreateRequest request)
-        {
-            request = request ?? throw new ArgumentNullException(nameof(request));
+        //[HttpPost]
+        //public async Task<IActionResult> AddCount(CountryCreateRequest request)
+        //{
+        //    request = request ?? throw new ArgumentNullException(nameof(request));
 
-            var token = User.FindFirst(ClaimTypes.Name).Value;
-            await _filmService.AddCountryAsync(request, token);
-            var filmCollection = await _filmService.GetAllShortAsync();
-            var genreCollection = await _filmService.GetAllGenreAsync();
-            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+        //    var token = User.FindFirst(ClaimTypes.Name).Value;
+        //    await _filmService.AddCountryAsync(request, token);
+        //    var filmCollection = await _filmService.GetAllShortAsync();
+        //    var genreCollection = await _filmService.GetAllGenreAsync();
+        //    var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
 
-            ViewBag.RandomFilm = resultRandomFilm.Id;
-            ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
-            return RedirectToAction("Index", "Home");
-        }
+        //    ViewBag.RandomFilm = resultRandomFilm.Id;
+        //    ViewBag.Genres = genreCollection;
+        //    ViewBag.Films = filmCollection;
+        //    return RedirectToAction("Index", "Home");
+        //}
 
+        /// <summary>
+        /// Get film by genre(Get).
+        /// </summary>
+        /// <param name="id">Film id.</param>
         [HttpGet]
         public async Task<IActionResult> Genre(int id)
         {
@@ -148,64 +163,5 @@ namespace CourseProject.Mvc2.Controllers
             ViewBag.Films = filmCollection;
             return View(result);
         }
-
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Film film = await _context.Films.FirstOrDefaultAsync(p => p.Id == id);
-        //        if (film != null)
-        //            return View(film);
-        //    }
-        //    return NotFound();
-        //}
-
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Film film = await _context.Films.FirstOrDefaultAsync(p => p.Id == id);
-        //        if (film != null)
-        //            return View(film);
-        //    }
-        //    return NotFound();
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(Film film)
-        //{
-        //    _context.Films.Update(film);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
-
-        //[HttpGet]
-        //[ActionName("Delete")]
-        //public async Task<IActionResult> ConfirmDelete(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Film film = await _context.Films.FirstOrDefaultAsync(p => p.Id == id);
-        //        if (film != null)
-        //            return View(film);
-        //    }
-        //    return NotFound();
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Film film = await _context.Films.FirstOrDefaultAsync(p => p.Id == id);
-        //        if (film != null)
-        //        {
-        //            _context.Films.Remove(film);
-        //            await _context.SaveChangesAsync();
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-        //    return NotFound();
-
-        //}
     }
 }

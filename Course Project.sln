@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.Mvc", "src\CourseProject.Mvc\CourseProject.Mvc.csproj", "{5F4BD38E-FB94-44FE-A316-F4BE59CA0F56}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course Project.Data", "Course Project.Data\Course Project.Data.csproj", "{86310604-82B7-45C0-9223-DA9D1991DB3F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course Project.Logic", "Course Project.Logic\Course Project.Logic.csproj", "{1F3D5ED6-55C8-4062-9A6B-A7A8A12310BF}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5F4BD38E-FB94-44FE-A316-F4BE59CA0F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F4BD38E-FB94-44FE-A316-F4BE59CA0F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F4BD38E-FB94-44FE-A316-F4BE59CA0F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F4BD38E-FB94-44FE-A316-F4BE59CA0F56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86310604-82B7-45C0-9223-DA9D1991DB3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86310604-82B7-45C0-9223-DA9D1991DB3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86310604-82B7-45C0-9223-DA9D1991DB3F}.Release|Any CPU.ActiveCfg = Release|Any CPU

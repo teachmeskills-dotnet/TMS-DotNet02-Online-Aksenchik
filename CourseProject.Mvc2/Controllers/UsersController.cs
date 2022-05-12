@@ -8,11 +8,18 @@ using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
 {
+    /// <summary>
+    /// Users controller.
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         readonly UserManager<User> _userManager;
 
+        /// <summary>
+        /// Constructor with params.
+        /// </summary>
+        /// <param name="userManager">User Manager.</param>
         public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
@@ -22,6 +29,10 @@ namespace CourseProject.Mvc2.Controllers
 
         public IActionResult Create() => View();
 
+        /// <summary>
+        /// Create User (Post).
+        /// </summary>
+        /// <param name="model">Create User ViewModel.</param>
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
@@ -55,6 +66,10 @@ namespace CourseProject.Mvc2.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Edit User (Post).
+        /// </summary>
+        /// <param name="model">Edit User View Model.</param>
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
@@ -83,13 +98,17 @@ namespace CourseProject.Mvc2.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Delete User (Post).
+        /// </summary>
+        /// <param name="id">Delete User by id.</param>
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                var result = await _userManager.DeleteAsync(user);
+                await _userManager.DeleteAsync(user);
             }
             return RedirectToAction("Index");
         }
@@ -101,10 +120,14 @@ namespace CourseProject.Mvc2.Controllers
             {
                 return NotFound();
             }
-            ChangePasswordViewModel model = new ChangePasswordViewModel { Id = user.Id, Email = user.Email };
+            ChangePasswordViewModel model = new() { Id = user.Id, Email = user.Email };
             return View(model);
         }
 
+        /// <summary>
+        /// Change password User (Post).
+        /// </summary>
+        /// <param name="model">Change Password View Model.</param>
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
