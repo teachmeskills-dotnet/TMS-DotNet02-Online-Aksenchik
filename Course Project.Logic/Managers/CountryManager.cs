@@ -2,7 +2,6 @@
 using Course_Project.Logic.Exceptions;
 using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Models;
-using CourseProject.Web.Shared.Models;
 using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Course_Project.Logic.Managers
 {
-    /// <inheritdoc cref="IActorManager"/>
+    /// <inheritdoc cref="ICountryManager"/>
     public class CountryManager : ICountryManager
     {
         private readonly IRepositoryManager<State> _countryRepository;

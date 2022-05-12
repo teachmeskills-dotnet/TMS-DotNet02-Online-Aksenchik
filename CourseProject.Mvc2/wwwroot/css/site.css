@@ -533,11 +533,19 @@ a {
     background-color: #243B55;
 }
 
+.footer__social{
+    display: flex;
+}
+
 .light-theme .info__sub {
     font-family: 'Cuprum', sans-serif;
     font-size: 24px;
     line-height: 31px;
     color: #FFFFFF;
+}
+
+.social__site{
+    margin-left: 10px;
 }
 
 /*Add film*/
@@ -696,12 +704,6 @@ a {
 }
 
 /* Media player */
-.light-theme .film__play {
-    width: 923px;
-    background: #F8F8F8;
-    padding: 8px;
-    margin-bottom: 10px;
-}
 
 .media__player {
     width: 100%;
@@ -734,13 +736,6 @@ a {
     }
 
 /* Recommend */
-.light-theme .film__recommend {
-    width: 923px;
-    background: #F8F8F8;
-    padding: 8px;
-    margin-bottom: 10px;
-}
-
 .recommend {
     display: flex;
     justify-content: space-between;
@@ -750,14 +745,6 @@ a {
     width: 100%;
     height: 184px;
     border-radius: 7px;
-}
-
-/* Comments */
-.light-theme .film__comments {
-    width: 923px;
-    background: #F8F8F8;
-    padding: 8px;
-    margin-bottom: 10px;
 }
 
 .textarea__comments {

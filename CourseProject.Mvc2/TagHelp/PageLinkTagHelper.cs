@@ -4,16 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.TagHelp
 {
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory urlHelperFactory;
+        private readonly IUrlHelperFactory urlHelperFactory;
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;
@@ -30,14 +26,11 @@ namespace CourseProject.Mvc2.TagHelp
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
-            // набор ссылок будет представлять список ul
-            TagBuilder tag = new TagBuilder("div");
+            TagBuilder tag = new("div");
             tag.AddCssClass("pagination");
 
-            // формируем три ссылки - на текущую, предыдущую и следующую
             TagBuilder currentItem = CreateTag(PageModel.PageNumber, urlHelper);
 
-            // создаем ссылку на предыдущую страницу, если она есть
             if (PageModel.HasPreviousPage)
             {
                 TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
@@ -45,7 +38,6 @@ namespace CourseProject.Mvc2.TagHelp
             }
 
             tag.InnerHtml.AppendHtml(currentItem);
-            // создаем ссылку на следующую страницу, если она есть
             if (PageModel.HasNextPage)
             {
                 TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
@@ -56,8 +48,8 @@ namespace CourseProject.Mvc2.TagHelp
 
         TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
         {
-            TagBuilder item = new TagBuilder("button");
-            TagBuilder link = new TagBuilder("a");
+            TagBuilder item = new("button");
+            TagBuilder link = new("a");
             if (pageNumber == this.PageModel.PageNumber)
             {
                 item.AddCssClass("active");

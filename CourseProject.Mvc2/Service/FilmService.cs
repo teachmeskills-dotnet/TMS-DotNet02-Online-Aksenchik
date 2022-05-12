@@ -1,9 +1,7 @@
 ﻿using CourseProject.Mvc2.Interfaces;
-using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -95,10 +93,10 @@ namespace CourseProject.Mvc2.Service
 
         public async Task<FilmShortModelResponse> GetByNameAsync(string name)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Film/name");
-            request.Content = new StringContent(JsonSerializer.Serialize(name), Encoding.UTF8, "application/json");
-            //request.Content = new StringContent(name, Encoding.UTF8, "application/json");
-            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer");
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Film/name")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(name), Encoding.UTF8, "application/json")
+            };
 
             using var response = await _httpClient.SendAsync(request);
 
@@ -172,8 +170,10 @@ namespace CourseProject.Mvc2.Service
 
         public async Task<IEnumerable<FilmShortModelResponse>> GetFilmByGenreIdAsync(int genreId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Film/genre");
-            request.Content = new StringContent(JsonSerializer.Serialize(genreId), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/Film/genre")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(genreId), Encoding.UTF8, "application/json")
+            };
             using var response = await _httpClient.SendAsync(request);
 
             // throw exception on error response

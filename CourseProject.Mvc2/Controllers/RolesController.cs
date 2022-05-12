@@ -9,11 +9,20 @@ using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
 {
+    /// <summary>
+    /// Roles controller.
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
-        RoleManager<IdentityRole> _roleManager;
-        UserManager<User> _userManager;
+        readonly RoleManager<IdentityRole> _roleManager;
+        readonly UserManager<User> _userManager;
+
+        /// <summary>
+        /// Constructor with params.
+        /// </summary>
+        /// <param name="userManager">User Manager.</param>
+        /// /// <param name="roleManager">Role Manager.</param>
         public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
@@ -22,6 +31,7 @@ namespace CourseProject.Mvc2.Controllers
         public IActionResult Index() => View(_roleManager.Roles.ToList());
 
         public IActionResult Create() => View();
+
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
@@ -49,7 +59,7 @@ namespace CourseProject.Mvc2.Controllers
             IdentityRole role = await _roleManager.FindByIdAsync(id);
             if (role != null)
             {
-                IdentityResult result = await _roleManager.DeleteAsync(role);
+                await _roleManager.DeleteAsync(role);
             }
             return RedirectToAction("Index");
         }
@@ -65,7 +75,7 @@ namespace CourseProject.Mvc2.Controllers
                 // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
-                ChangeRoleViewModel model = new ChangeRoleViewModel
+                ChangeRoleViewModel model = new()
                 {
                     UserId = user.Id,
                     UserEmail = user.Email,
@@ -87,7 +97,7 @@ namespace CourseProject.Mvc2.Controllers
                 // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 // получаем все роли
-                var allRoles = _roleManager.Roles.ToList();
+                //var allRoles = _roleManager.Roles.ToList();
                 // получаем список ролей, которые были добавлены
                 var addedRoles = roles.Except(userRoles);
                 // получаем роли, которые были удалены

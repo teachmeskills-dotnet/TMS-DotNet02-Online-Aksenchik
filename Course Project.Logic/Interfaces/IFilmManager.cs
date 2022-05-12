@@ -1,8 +1,6 @@
 ﻿using Course_Project.Logic.Models;
-using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Course_Project.Logic.Interfaces
@@ -36,14 +34,14 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Get film by name.
         /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <returns>Film data transfer object.</returns>
+        /// <param name="nameSearch">Film Name.</param>
+        /// <returns>FilmShortModelResponse.</returns>
         Task<FilmShortModelResponse> GetByNameAsync(string nameSearch);
 
         /// <summary>
         /// Get all films by genre.
         /// </summary>
-        /// <param name="id">Identifier.</param>
+        /// <param name="idGenre">Identifier.</param>
         /// <returns>Film data transfer object.</returns>
         Task<IEnumerable<FilmDto>> GetFilmByGenreAsync(int idGenre);
 

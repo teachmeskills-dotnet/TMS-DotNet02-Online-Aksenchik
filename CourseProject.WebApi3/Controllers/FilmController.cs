@@ -4,11 +4,9 @@ using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
@@ -48,7 +46,6 @@ namespace CourseProject.WebApi.Controllers
             }
             var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlStr);
-            xmlDoc = xmlDoc ?? throw new ArgumentNullException(nameof(xmlDoc));
 
             XmlNodeList saveItems = xmlDoc.SelectNodes("rating");
             XmlNode kinopoisk = saveItems.Item(0).SelectSingleNode("kp_rating");
@@ -175,17 +172,12 @@ namespace CourseProject.WebApi.Controllers
         [HttpPost("rating")]
         public async Task<IActionResult> AddRatingAsync(int filmId, int score)
         {
-            RatingCreateRequest request = new()
-            {
-                FilmId = filmId,
-                Rating = score
-            };
             await _filmManager.AddScoreFilmAsync(filmId, score);
             return Ok();
         }
 
         [HttpGet("Totalrating")]
-        public async Task<IActionResult> TotalRatingAsync(int filmId) //Доделать рейтинг
+        public async Task<IActionResult> TotalRatingAsync(int filmId)
         {
             var result = await _filmManager.GetTotalScoreFilm(filmId);
             return Ok(result);

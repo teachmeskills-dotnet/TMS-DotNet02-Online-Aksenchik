@@ -130,7 +130,7 @@ namespace Course_Project.Logic.Managers
 
             if (filmDelete is null)
             {
-                throw new NotFoundException($"'{nameof(id)}' project not found.", nameof(id));
+                throw new NotFoundException($"'{nameof(id)}' film not found.", nameof(id));
             }
 
             _filmRepository.Delete(filmDelete);
@@ -303,7 +303,7 @@ namespace Course_Project.Logic.Managers
             {
                 return totalNull;
             }
-            float total = (float)ratings.Sum() / (float)ratings.Count();
+            float total = (float)ratings.Sum() / (float)ratings.Count;
 
             return total;
         }

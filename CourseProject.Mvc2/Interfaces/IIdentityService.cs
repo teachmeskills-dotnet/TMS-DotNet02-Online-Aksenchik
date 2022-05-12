@@ -1,9 +1,5 @@
-﻿using Course_Project.Data.Models;
-using CourseProject.Web.Shared.Models.Responses;
-using System;
+﻿using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Interfaces
@@ -29,6 +25,8 @@ namespace CourseProject.Mvc2.Interfaces
         /// <summary>
         /// Get user profile by id.
         /// </summary>
+        /// /// <param name="token">Jwt token.</param>
+        /// /// <param name="userId">User id.</param>
         /// <returns>Profile user.</returns>
         Task<ProfileUserResponse> GetProfileByNameAsync(string userId, string token);
     }

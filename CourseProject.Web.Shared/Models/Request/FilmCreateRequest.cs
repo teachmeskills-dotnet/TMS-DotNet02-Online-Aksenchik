@@ -8,7 +8,7 @@ namespace CourseProject.Web.Shared.Models.Request
         /// <summary>
         /// Name.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Не указано имя пользовате1")]
         public string NameFilms { get; set; }
 
         /// <summary>
@@ -85,13 +85,13 @@ namespace CourseProject.Web.Shared.Models.Request
         /// <summary>
         /// Path to file.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Не указано имя пользователя1")]
         public string PathPoster { get; set; }
 
         /// <summary>
         /// Image name.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Не указано имя пользователя2")]
         public string ImageName { get; set; }
     }
 }
