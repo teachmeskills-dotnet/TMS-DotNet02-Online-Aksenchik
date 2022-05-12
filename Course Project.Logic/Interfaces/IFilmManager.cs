@@ -15,7 +15,11 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Create film.
         /// </summary>
-        /// <param name="model">film data transfer object.</param>
+        /// <param name="filmDto">film data transfer object.</param>
+        /// /// <param name="filmActorDto">List filmActor data transfer object.</param>
+        /// /// <param name="filmGenreDto">List filmGenre data transfer object.</param>
+        /// /// <param name="filmCountryDto">List filmCountry data transfer object.</param>
+        /// /// <param name="filmStageManagerDto">List filmStageManager data transfer object.</param>
         Task CreateAsync(FilmDto filmDto, 
             List<FilmActorDto> filmActorDto, 
             List<FilmGenreDto> filmGenreDto,
@@ -64,13 +68,12 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Get all short information Film.
         /// </summary>
-        /// <returns>Film data transfer objects.</returns>
         Task AddScoreFilmAsync(int idFilm, int score);
 
         /// <summary>
         /// Get random Film.
         /// </summary>
-        /// <returns>Film data transfer objects.</returns>
+        /// <returns>integer.</returns>
         Task<int> GetRandomFilmAsync();
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace CourseProject.Mvc2.Controllers
         public async Task<IActionResult> Index(int page = 1)
         {
             var result = await _filmService.GetAllShortAsync();
-            int pageSize = 3;
+            int pageSize = 4;
             var count = result.Count();
             var items = result.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 

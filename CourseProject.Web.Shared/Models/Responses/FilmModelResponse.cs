@@ -70,21 +70,6 @@ namespace CourseProject.Web.Shared.Models.Responses
         /// </summary>
         public List<Actor> Actors { get; set; }
 
-        ///// <summary>
-        ///// Actor first name.
-        ///// </summary>
-        //public List<string> FirstName { get; set; }
-
-        ///// <summary>
-        ///// Actor last name.
-        ///// </summary>
-        //public List<string> LastName { get; set; }
-
-        ///// <summary>
-        ///// Actor second name.
-        ///// </summary>
-        //public List<string> SecondName { get; set; }
-
         /// <summary>
         /// Description.
         /// </summary>
