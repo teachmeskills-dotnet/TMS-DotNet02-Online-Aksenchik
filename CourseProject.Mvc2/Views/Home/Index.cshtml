@@ -2,13 +2,17 @@
 @model IndexViewModel
 @using CourseProject.Mvc2.ViewModels
 
+@{
+    ViewData["Title"] = "Главная";
+}
+
 @addTagHelper *, CourseProject.Mvc2
 <main class="main__films" role="main">
     @foreach (var film in Model.FilmShortModelResponses)
     {
         <form asp-action="Index" asp-controller="Film" asp-route-id="@film.Id">
             <div class="post__films">
-                <a asp-action="Index" asp-controller="Film" asp-route-id="@film.Id"><img src="@Url.Content(film.PathPoster)" width="214px" height="300px" class="main__poster" alt=""></a>
+                <a asp-action="Index" asp-controller="Film" asp-route-id="@film.Id"><img src="@Url.Content(film.PathPoster)" class="main__poster" alt=""></a>
 
                 <div class="rating">
                     <input type="radio" id="star-1" name="rating" value="1">

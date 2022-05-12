@@ -1,6 +1,9 @@
 ﻿
 namespace Course_Project.Data.Constants
 {
+    /// <summary>
+    /// SQL configuration contants.
+    /// </summary>
     public static class SqlConfiguration
     {
         /// <summary>

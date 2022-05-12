@@ -11,7 +11,7 @@ namespace Course_Project.Logic.Interfaces
         /// <summary>
         /// Create genre.
         /// </summary>
-        /// <param name="model">genre data transfer object.</param>
+        /// <param name="genreDto">genre data transfer object.</param>
         Task CreateAsync(GenreDto genreDto);
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Course_Project.Logic.Interfaces
         /// Update genre by identifier.
         /// </summary>
         /// <param name="model">genre data transfer object.</param>
-        Task UpdateAsync(GenreDto model);
+        Task UpdateAsync(GenreDto genreDto);
 
         /// <summary>
         /// Delete genre by identifier.

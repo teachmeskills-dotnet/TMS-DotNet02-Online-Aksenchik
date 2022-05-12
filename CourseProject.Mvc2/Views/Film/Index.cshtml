@@ -81,7 +81,7 @@
             <div class="rating__imdb">IMDb: @Html.DisplayFor(model => model.RatingImdb)</div>
         </div>
     </div>
-    <div class="film__play">
+    <div class="film__description">
         <div class="media__use">
             <a href="#"><div class="button__film-post">Избранное</div></a>
             <a href="#"><div class="button__film-post">Смотреть позже</div></a>
@@ -91,7 +91,7 @@
             <img class="media__player" src="~/img/play.png" alt="">
         </div>
     </div>
-    <div class="film__recommend">
+    <div class="film__description recommend-style">
         <div class="description">Мы рекомендуем:</div>
         <div class="recommend">
             @foreach (var item in ViewBag.Recommended)
@@ -105,7 +105,7 @@
             }
         </div>
     </div>
-    <div class="film__comments">
+    <div class="film__description">
         <div class="description">Добавить комментарий:</div>
         <div id="disqus_thread"></div>
         <script>
