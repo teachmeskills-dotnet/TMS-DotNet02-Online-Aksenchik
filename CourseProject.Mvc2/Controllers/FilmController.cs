@@ -10,6 +10,9 @@ using CourseProject.Web.Shared.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using CourseProject.Web.Shared.Models.Responses;
+using System.Collections.Generic;
+using CourseProject.Mvc2.ViewModels;
 
 namespace CourseProject.Mvc2.Controllers
 {
@@ -43,7 +46,7 @@ namespace CourseProject.Mvc2.Controllers
             var filmCollection = await _filmService.GetAllShortAsync();
             var genreCollection = await _filmService.GetAllGenreAsync();
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Recommended = filmCollection.Take(6);
 
@@ -72,7 +75,7 @@ namespace CourseProject.Mvc2.Controllers
             ViewBag.AddManager = new SelectList(stageManagersCollection, "Id", "StageManagers");
             ViewBag.AddActor = actorsCollection;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
             return View();
         }
 
@@ -116,27 +119,36 @@ namespace CourseProject.Mvc2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //public IActionResult AddCount()
-        //{
-        //    return View();
-        //}
+        public async Task<IActionResult> AddCount()
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+            var countryCollection = await _filmService.GetAllCountryAsync();
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddCount(CountryCreateRequest request)
-        //{
-        //    request = request ?? throw new ArgumentNullException(nameof(request));
+            ViewBag.RandomFilm = resultRandomFilm.Id;
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection.Take(7);
+            ViewBag.AllCountry = countryCollection;
 
-        //    var token = User.FindFirst(ClaimTypes.Name).Value;
-        //    await _filmService.AddCountryAsync(request, token);
-        //    var filmCollection = await _filmService.GetAllShortAsync();
-        //    var genreCollection = await _filmService.GetAllGenreAsync();
-        //    var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+            CountryViewModel test = new()
+            {
+                CountryModelResponses = countryCollection,
+            };
 
-        //    ViewBag.RandomFilm = resultRandomFilm.Id;
-        //    ViewBag.Genres = genreCollection;
-        //    ViewBag.Films = filmCollection;
-        //    return RedirectToAction("Index", "Home");
-        //}
+            return View(test);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCount(CountryViewModel request)
+        {
+            request = request ?? throw new ArgumentNullException(nameof(request));
+
+            var token = User.FindFirst(ClaimTypes.CookiePath).Value;
+            await _filmService.AddCountryAsync(request.Country, token);
+            
+            return RedirectToAction("Admin", "Home");
+        }
 
         /// <summary>
         /// Get film by genre(Get).
@@ -162,6 +174,41 @@ namespace CourseProject.Mvc2.Controllers
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection;
             return View(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Upgrade(int id)
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            var countryCollection = await _filmService.GetAllCountryAsync();
+            var actorsCollection = await _filmService.GetAllActorAsync();
+            var stageManagersCollection = await _filmService.GetAllStageManagerAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
+            ViewBag.AddGenres = new SelectList(genreCollection, "Id", "Genres");
+            ViewBag.AddCountry = new SelectList(countryCollection, "Id", "Country");
+            ViewBag.AddManager = new SelectList(stageManagersCollection, "Id", "StageManagers");
+            ViewBag.AddActor = actorsCollection;
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection.Take(7);
+            var token = User.FindFirst(ClaimTypes.Name).Value;
+
+            var result = await _filmService.GetByIdUpgradeAsync(id);
+
+            return View(result);
+        }
+
+        /// <summary>
+        /// Delete country (Post).
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> DeleteCountries(int id)
+        {
+            var token = User.FindFirst(ClaimTypes.CookiePath).Value;
+            await _filmService.DeleteCountryAsync(id, token);
+            return RedirectToAction("Admin", "Home");
         }
     }
 }

@@ -123,6 +123,14 @@ namespace CourseProject.WebApi.Controllers
             return Ok(film);
         }
 
+        [HttpGet("Upgrade{id}")]
+        public async Task<IActionResult> UpgradeFilm(int id)
+        {
+            var film = await _filmManager.GetByIdForUpgradeAsync(id);
+
+            return Ok(film);
+        }
+
         [HttpGet("name")]
         public async Task<IActionResult> GetName([FromBody] string name)
         {
@@ -184,7 +192,7 @@ namespace CourseProject.WebApi.Controllers
         }
 
         // DELETE api/<FilmController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteFilm{id}")]
         public async Task DeleteAsync(int id)
         {
             await _filmManager.DeleteAsync(id);

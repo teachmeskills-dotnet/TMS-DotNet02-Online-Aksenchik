@@ -1,4 +1,6 @@
 ﻿using CourseProject.Mvc2.Interfaces;
+using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using System;
 using System.Collections.Generic;
@@ -39,11 +41,15 @@ namespace CourseProject.Mvc2.Service
             }
         }
 
-        public async Task AddCountryAsync(object value, string token)
+        public async Task AddCountryAsync(string value, string token)
         {
+            CountryCreateRequest model = new()
+            {
+                Country = value
+            };
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/Country/addCountry")
             {
-                Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json")
             };
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -56,6 +62,37 @@ namespace CourseProject.Mvc2.Service
                 throw new Exception(error["message"]);
             }
         }
+
+        public async Task DeleteFilmAsync(int id, string token)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"/api/Film/DeleteFilm{id}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+        }
+
+        public async Task DeleteCountryAsync(int id, string token)
+        {
+                var request = new HttpRequestMessage(HttpMethod.Delete, $"/api/Country/{id}");
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using var response = await _httpClient.SendAsync(request);
+
+                // throw exception on error response
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                    throw new Exception(error["message"]);
+                }
+        }
+            
 
         public async Task<IEnumerable<FilmShortModelResponse>> GetAllShortAsync()
         {
@@ -88,6 +125,23 @@ namespace CourseProject.Mvc2.Service
             }
 
             var film = await response.Content.ReadFromJsonAsync<FilmModelResponse>();
+            return film;
+        }
+
+        public async Task<FilmUpgradeModel> GetByIdUpgradeAsync(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/Film/Upgrade{id}");
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var film = await response.Content.ReadFromJsonAsync<FilmUpgradeModel>();
             return film;
         }
 

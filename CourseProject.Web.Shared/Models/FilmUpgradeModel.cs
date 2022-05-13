@@ -1,97 +1,88 @@
-﻿using System.Collections.Generic;
+﻿using Course_Project.Data.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CourseProject.Web.Shared.Models.Request
+namespace CourseProject.Web.Shared.Models
 {
-    public class FilmCreateRequest
+    public class FilmUpgradeModel
     {
         /// <summary>
         /// Name.
         /// </summary>
-        [Required]
         public string NameFilms { get; set; }
 
         /// <summary>
         /// Age limit.
         /// </summary>
-        [Required]
         public int AgeLimit { get; set; }
 
         /// <summary>
         /// Identification rating kinopoisk.
         /// </summary>
-        [Required]
         public int IdRating { get; set; }
 
-        /// <summary>
-        /// Rating site.
-        /// </summary>
-        [Required]
-        public float RatingSite { get; set; }
+        ///// <summary>
+        ///// Rating site.
+        ///// </summary>
+        //public float RatingSite { get; set; }
 
         /// <summary>
         /// Release date.
         /// </summary>
-        [Required]
         public int ReleaseDate { get; set; }
 
-        /// <summary>
-        /// Link for file film.
-        /// </summary>
-        public string LinkFilmPlayer { get; set; }
+        ///// <summary>
+        ///// Link for file film.
+        ///// </summary>
+        //public string LinkFilmPlayer { get; set; }
 
         /// <summary>
         /// Link for trailer.
         /// </summary>
-        [Required]
         public string LinkFilmtrailer { get; set; }
 
         /// <summary>
         /// Country identification.
         /// </summary>
-        [Required]
-        public List<int> CountryIds { get; set; }
+        public List<string> CountryIds { get; set; }
 
         /// <summary>
         /// Actor identification.
         /// </summary>
-        [Required]
-        public List<int> ActorIds { get; set; }
+        public List<Actor> ActorIds { get; set; }
 
         /// <summary>
         /// Genre identification.
         /// </summary>
-        [Required]
-        public List<int> GenreIds { get; set; }
+        public List<string> GenreIds { get; set; }
 
         /// <summary>
         /// Stage manager identification.
         /// </summary>
-        [Required]
-        public List<int> StageManagerIds { get; set; }
+        public List<string> StageManagerIds { get; set; }
 
         /// <summary>
         /// Description.
         /// </summary>
-        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// Time.
         /// </summary>
-        [Required]
         public int Time { get; set; }
 
         /// <summary>
         /// Path to file.
         /// </summary>
-        [Required]
         public string PathPoster { get; set; }
 
         /// <summary>
         /// Image name.
         /// </summary>
-        [Required]
         public string ImageName { get; set; }
     }
 }

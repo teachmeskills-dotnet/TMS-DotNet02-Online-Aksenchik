@@ -1,4 +1,6 @@
-﻿using CourseProject.Web.Shared.Models.Responses;
+﻿using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Request;
+using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,7 +23,21 @@ namespace CourseProject.Mvc2.Interfaces
         /// </summary>
         /// <param name="value">Object.</param>
         /// <param name="token">Jwt token.</param>
-        Task AddCountryAsync(object value, string token);
+        Task AddCountryAsync(string value, string token);
+
+        /// <summary>
+        /// Delete film.
+        /// </summary>
+        /// <param name="id">id.</param>
+        /// <param name="token">Jwt token.</param>
+        Task DeleteFilmAsync(int id, string token);
+
+        /// <summary>
+        /// Delete country.
+        /// </summary>
+        /// <param name="id">id.</param>
+        /// <param name="token">Jwt token.</param>
+        Task DeleteCountryAsync(int id, string token);
 
         /// <summary>
         /// Get all short information films.
@@ -57,8 +73,15 @@ namespace CourseProject.Mvc2.Interfaces
         /// Get film by id.
         /// </summary>
         /// <param name="id">Film id.</param>
-        /// <returns>Film collection.</returns>
+        /// <returns>Film.</returns>
         Task<FilmModelResponse> GetByIdAsync(int id);
+
+        /// <summary>
+        /// Get film by id for upgrade.
+        /// </summary>
+        /// <param name="id">Film id.</param>
+        /// <returns>Film.</returns>
+        Task<FilmUpgradeModel> GetByIdUpgradeAsync(int id);
 
         /// <summary>
         /// Get random film by id.

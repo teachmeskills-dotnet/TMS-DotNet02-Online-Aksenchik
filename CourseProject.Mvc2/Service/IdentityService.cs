@@ -44,7 +44,26 @@ namespace CourseProject.Mvc2.Service
             return profile;
         }
 
-        public async Task<(IList<string> roles, string userName)> LoginAsync(object value)
+        public async Task<List<ProfileUserResponse>> GetAllUsersAsync(string token)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/User/allUsers");
+
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
+
+            var profile = await response.Content.ReadFromJsonAsync<List<ProfileUserResponse>>();
+            return profile;
+        }
+
+        public async Task<(IList<string> roles, string userName, string token)> LoginAsync(object value)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "api/user/login")
             {
@@ -62,7 +81,7 @@ namespace CourseProject.Mvc2.Service
 
             var record = await response.Content.ReadFromJsonAsync<UserAuthModel>();
 
-            return (record.Roles, record.UserName);
+            return (record.Roles, record.UserName, record.Token);
         }
 
         public async Task<(string Email, string Password, string PasswordConfirm)> RegisterAsync(object value)
@@ -84,6 +103,21 @@ namespace CourseProject.Mvc2.Service
             var record = await response.Content.ReadFromJsonAsync<UserRegModel>();
             
             return (record.Email, record.Password, record.PasswordConfirm);
+        }
+
+        public async Task DeleteUserAsync(string id, string token)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"/api/User/DeleteUser{id}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var response = await _httpClient.SendAsync(request);
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                throw new Exception(error["message"]);
+            }
         }
     }
 }

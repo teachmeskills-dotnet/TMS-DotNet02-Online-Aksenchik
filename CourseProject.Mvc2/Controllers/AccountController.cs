@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace CourseProject.Mvc2.Controllers
 
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
 
             return View(viewModel);
         }
@@ -60,11 +61,12 @@ namespace CourseProject.Mvc2.Controllers
 
             if (ModelState.IsValid)
             {
-                var (roles, userName) = await _identityService.LoginAsync(request);
+                var (roles, userName, token) = await _identityService.LoginAsync(request);
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, userName),
-                    new Claim(ClaimTypes.Email, userName)
+                    new Claim(ClaimTypes.Email, userName),
+                    new Claim(ClaimTypes.CookiePath, token)
                 };
 
                 foreach (var role in roles)
@@ -97,7 +99,7 @@ namespace CourseProject.Mvc2.Controllers
 
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
             if (User.Identity.IsAuthenticated == false)
             {
                 var viewModel = new UserRegistationRequest();
@@ -154,10 +156,42 @@ namespace CourseProject.Mvc2.Controllers
 
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
             var token = User.FindFirst(ClaimTypes.Name).Value;
             var result = await _identityService.GetProfileByNameAsync(userName, token);
             return View(result);
+        }
+
+        /// <summary>
+        /// All user(Get).
+        /// </summary>
+        /// <param name="userName">User name.</param>
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser()
+        {
+            var token = User.FindFirst(ClaimTypes.CookiePath).Value;
+            var result = await _identityService.GetAllUsersAsync(token);
+
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection.Take(7);
+            return View(result);
+        }
+
+        /// <summary>
+        /// Delete user(Post).
+        /// </summary>
+        /// <param name="id">User name.</param>
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var token = User.FindFirst(ClaimTypes.CookiePath).Value;
+            await _identityService.DeleteUserAsync(id, token);
+            return RedirectToAction("Admin", "Home");
         }
     }
 }
