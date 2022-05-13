@@ -2,6 +2,7 @@
 using Course_Project.Logic.Exceptions;
 using Course_Project.Logic.Interfaces;
 using Course_Project.Logic.Models;
+using CourseProject.Web.Shared.Models;
 using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using Microsoft.EntityFrameworkCore;
@@ -124,7 +125,7 @@ namespace Course_Project.Logic.Managers
             await _filmRepository.SaveChangesAsync();
         }
 
-            public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var filmDelete = await _filmRepository.GetEntityAsync(p => p.Id == id);
 
@@ -133,6 +134,17 @@ namespace Course_Project.Logic.Managers
                 throw new NotFoundException($"'{nameof(id)}' film not found.", nameof(id));
             }
 
+            var actorsDelete = await _filmActorRepository.GetAll().Where(a => a.FilmId == id).ToListAsync();
+            var countriesDelete = await _filmCountryRepository.GetAll().Where(a => a.FilmId == id).ToListAsync();
+            var genresDelete = await _filmGenreRepository.GetAll().Where(a => a.FilmId == id).ToListAsync();
+            var stageManagersDelete = await _filmStageManagerRepository.GetAll().Where(a => a.FilmId == id).ToListAsync();
+            var ratingsDelete = await _filmRatingRepository.GetAll().Where(a => a.FilmId == id).ToListAsync();
+
+            _filmRatingRepository.DeleteRange(ratingsDelete);
+            _filmStageManagerRepository.DeleteRange(stageManagersDelete);
+            _filmGenreRepository.DeleteRange(genresDelete);
+            _filmCountryRepository.DeleteRange(countriesDelete);
+            _filmActorRepository.DeleteRange(actorsDelete);
             _filmRepository.Delete(filmDelete);
             await _filmRepository.SaveChangesAsync();
         }
@@ -229,7 +241,48 @@ namespace Course_Project.Logic.Managers
             return model;
         }
 
-        public async Task<FilmShortModelResponse> GetByNameAsync(string nameSearch) //Сделать поиск по сайту
+        public async Task<FilmUpgradeModel> GetByIdForUpgradeAsync(int id)
+        {
+            Film film = await _filmRepository.GetEntityAsync(f => f.Id == id);
+            var filmCountryIds = await _filmCountryRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.CountryId).ToListAsync();
+            var countries = await _countryRepository.GetAll().Where(c => filmCountryIds.Contains(c.Id)).Select(c => c.Country).ToListAsync();
+
+            var filmGenreIds = await _filmGenreRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.GenreId).ToListAsync();
+            var genres = await _genreRepository.GetAll().Where(g => filmGenreIds.Contains(g.Id)).Select(g => g.Genres).ToListAsync();
+
+            var filmStageManagerIds = await _filmStageManagerRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.StageManagerId).ToListAsync();
+            var stageManagers = await _stageManagerRepository.GetAll().Where(m => filmStageManagerIds.Contains(m.Id)).Select(m => m.StageManagers).ToListAsync();
+
+            var filmActorIds = await _filmActorRepository.GetAll().Where(f => f.FilmId == film.Id).Select(f => f.ActorId).ToListAsync();
+            var actors = await _actorRepository.GetAll().Where(a => filmActorIds.Contains(a.Id)).Select(a => new Actor
+            {
+                Id = a.Id,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+            }).ToListAsync();
+
+
+            FilmUpgradeModel model = new()
+            {
+                NameFilms = film.NameFilms,
+                ImageName = film.ImageName,
+                PathPoster = film.PathPoster,
+                ReleaseDate = film.ReleaseDate,
+                LinkFilmtrailer = film.LinkFilmtrailer,
+                AgeLimit = film.AgeLimit,
+                IdRating = film.IdRating,
+                Time = film.Time,
+                Description = film.Description,
+                ActorIds = actors,
+                GenreIds = genres,
+                CountryIds = countries,
+                StageManagerIds = stageManagers
+            };
+
+            return model;
+        }
+
+        public async Task<FilmShortModelResponse> GetByNameAsync(string nameSearch)
         {
             Film film = await _filmRepository.GetAll().FirstOrDefaultAsync(f => f.NameFilms == nameSearch);
 

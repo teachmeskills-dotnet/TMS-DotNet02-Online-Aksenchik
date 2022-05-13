@@ -210,6 +210,10 @@ a {
     justify-content: space-between;
 }
 
+.light-theme .delete__user {
+    display: flex;
+}
+
 .light-theme .text__profile {
     font-weight: 500;
     color: #243B55;
@@ -776,6 +780,46 @@ a {
     align-items: center;
 }
 
+/*Admin panel*/
+.admin__main{
+    padding: 50px;
+}
+.admin__control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.light-theme .button__admin-panel {
+    padding: 6px;
+    border: 1px solid #243B55;
+    border-radius: 7px;
+    font-weight: 500;
+    color: #243B55;
+    margin-right: 6px;
+    text-align: center;
+}
+
+.light-theme .button__admin-panel:hover {
+    background: #243B55;
+    border: 1px solid white;
+    color: #FFFFFF;
+    transition: 0.1s linear;
+}
+
+/*Public style*/
+.item__view {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.item__view-block{
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
 
 /* Dark theme */
 .dark-theme {
@@ -934,6 +978,19 @@ a {
     background: #19293b;
      border: 1px solid #19293b;
 }
+
+.dark-theme .button__admin-panel {
+    background-color: #111c29;
+    border: 1px solid #19293b;
+    color: #c8c8c8;
+}
+
+    .dark-theme .button__admin-panel:hover {
+        background: #19293b;
+        border: 1px solid #19293b;
+        color: #FFFFFF;
+        transition: 0.1s linear;
+    }
 
 
 .dark-theme .svg__favourite {

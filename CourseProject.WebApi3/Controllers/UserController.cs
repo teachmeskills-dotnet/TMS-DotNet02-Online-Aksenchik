@@ -6,8 +6,10 @@ using CourseProject.WebApi3.Contracts.Responses;
 using CourseProject.WebApi3.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -124,6 +126,32 @@ namespace CourseProject.WebApi3.Controllers
 
             return Ok(model);
         }
-       
+
+        [HttpGet("allUsers")]
+        public async Task<IActionResult> GetAllUsersAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userResponses = new List<ProfileUserResponse>();
+
+            foreach (var item in users)
+            {
+                userResponses.Add(new ProfileUserResponse
+                {
+                    Id = item.Id,
+                    Email = item.Email,
+                    UserName = item.UserName
+                });
+            }
+
+            return Ok(userResponses);
+        }
+
+        [HttpDelete("DeleteUser{id}")]
+        public async Task<IActionResult> DeleteUsersAsync(string id)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+            await _userManager.DeleteAsync(user);
+            return Ok();
+        }
     }
 }

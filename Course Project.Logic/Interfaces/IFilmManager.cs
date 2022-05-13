@@ -1,4 +1,6 @@
 ﻿using Course_Project.Logic.Models;
+using CourseProject.Web.Shared.Models;
+using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,6 +32,13 @@ namespace Course_Project.Logic.Interfaces
         /// <param name="id">Identifier.</param>
         /// <returns>Film data transfer object.</returns>
         Task<FilmModelResponse> GetByIdAsync(int id);
+
+        /// <summary>
+        /// Get film by identifier.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <returns>Film data transfer object.</returns>
+        Task<FilmUpgradeModel> GetByIdForUpgradeAsync(int id);
 
         /// <summary>
         /// Get film by name.

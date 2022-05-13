@@ -3,6 +3,7 @@ using CourseProject.Mvc2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CourseProject.Mvc2.Controllers
@@ -47,7 +48,7 @@ namespace CourseProject.Mvc2.Controllers
 
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = result;
+            ViewBag.Films = result.Take(7);
             return View(viewModel);
         }
 
@@ -64,10 +65,38 @@ namespace CourseProject.Mvc2.Controllers
 
             ViewBag.RandomFilm = resultRandomFilm.Id;
             ViewBag.Genres = genreCollection;
-            ViewBag.Films = filmCollection;
+            ViewBag.Films = filmCollection.Take(7);
             var result = await _filmService.GetByNameAsync(name);
 
             return View(result);
+        }
+
+        /// <summary>
+        /// Admin panel (Get).
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Admin()
+        {
+            var filmCollection = await _filmService.GetAllShortAsync();
+            var genreCollection = await _filmService.GetAllGenreAsync();
+            var resultRandomFilm = await _filmService.GetRandomFilmByIdAsync();
+
+            ViewBag.RandomFilm = resultRandomFilm.Id;
+            ViewBag.Genres = genreCollection;
+            ViewBag.Films = filmCollection.Take(7);
+
+            return View(filmCollection);
+        }
+
+        /// <summary>
+        /// Delete film (Post).
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var token = User.FindFirst(ClaimTypes.CookiePath).Value;
+            await _filmService.DeleteFilmAsync(id, token);
+            return RedirectToAction("Admin", "Home");
         }
     }
 }
