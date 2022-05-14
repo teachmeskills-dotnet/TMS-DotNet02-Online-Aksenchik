@@ -1,4 +1,4 @@
-﻿using CourseProject.Mvc2.Interfaces;
+﻿using CourseProject.Web.Interfaces;
 using CourseProject.Web.Shared.Models;
 using CourseProject.Web.Shared.Models.Request;
 using CourseProject.Web.Shared.Models.Responses;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.Service
+namespace CourseProject.Web.Service
 {
     /// <inheritdoc cref="IFilmService"/>
     public class FilmService : IFilmService

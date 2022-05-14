@@ -1,7 +1,7 @@
 ﻿using CourseProject.Web.Shared.Models.Responses;
 using System.Collections.Generic;
 
-namespace CourseProject.Mvc2.ViewModels
+namespace CourseProject.Web.ViewModels
 {
     public class IndexViewModel
     {

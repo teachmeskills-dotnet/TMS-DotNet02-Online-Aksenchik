@@ -1,5 +1,5 @@
-using CourseProject.Mvc2.Interfaces;
-using CourseProject.Mvc2.Service;
+using CourseProject.Web.Interfaces;
+using CourseProject.Web.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Net.Http;
 
-namespace CourseProject.Mvc2
+namespace CourseProject.Web
 {
     public class Startup
     {
@@ -28,7 +28,7 @@ namespace CourseProject.Mvc2
 
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IFilmService, FilmService>();
-            services.AddScoped(x => new HttpClient() { BaseAddress = new Uri("https://localhost:44327") });
+            services.AddScoped(x => new HttpClient() { BaseAddress = new Uri("https://localhost:44327") });//Change your port
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }

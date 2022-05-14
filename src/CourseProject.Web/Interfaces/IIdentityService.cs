@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.Interfaces
+namespace CourseProject.Web.Interfaces
 {
     /// <summary>
     /// Identity service.

@@ -1,11 +1,11 @@
-﻿using CourseProject.Mvc2.ViewModels;
+﻿using CourseProject.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace CourseProject.Mvc2.TagHelp
+namespace CourseProject.Web.TagHelp
 {
     public class PageLinkTagHelper : TagHelper
     {

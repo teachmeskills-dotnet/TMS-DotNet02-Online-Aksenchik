@@ -1,12 +1,12 @@
 ﻿@*@model IEnumerable<FilmShortModelResponse>*@
 @model IndexViewModel
-@using CourseProject.Mvc2.ViewModels
+@using CourseProject.Web.ViewModels
 
 @{
     ViewData["Title"] = "Главная";
 }
 
-@addTagHelper *, CourseProject.Mvc2
+@addTagHelper *, CourseProject.Web
 <main class="main__films" role="main">
     @foreach (var film in Model.FilmShortModelResponses)
     {
