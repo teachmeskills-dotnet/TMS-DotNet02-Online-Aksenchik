@@ -1,4 +1,4 @@
-﻿namespace CourseProject.Mvc2.ViewModels
+﻿namespace CourseProject.Web.ViewModels
 {
     public class PageViewModel
     {

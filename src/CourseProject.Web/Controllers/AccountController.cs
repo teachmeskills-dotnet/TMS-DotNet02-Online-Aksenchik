@@ -1,4 +1,4 @@
-﻿using CourseProject.Mvc2.Interfaces;
+﻿using CourseProject.Web.Interfaces;
 using CourseProject.Web.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.Controllers
+namespace CourseProject.Web.Controllers
 {
     /// <summary>
     /// Account controller.

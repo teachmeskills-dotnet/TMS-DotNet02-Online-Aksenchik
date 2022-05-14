@@ -1,5 +1,5 @@
-﻿using CourseProject.Mvc2.Interfaces;
-using CourseProject.Mvc2.ViewModels;
+﻿using CourseProject.Web.Interfaces;
+using CourseProject.Web.ViewModels;
 using CourseProject.Web.Shared.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace CourseProject.Mvc2.Controllers
+namespace CourseProject.Web.Controllers
 {
     /// <summary>
     /// Film controller.
@@ -198,7 +198,6 @@ namespace CourseProject.Mvc2.Controllers
             ViewBag.AddActor = actorsCollection;
             ViewBag.Genres = genreCollection;
             ViewBag.Films = filmCollection.Take(7);
-            var token = User.FindFirst(ClaimTypes.Name).Value;
 
             var result = await _filmService.GetByIdUpgradeAsync(id);
 
